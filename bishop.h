@@ -1,18 +1,9 @@
-#ifndef BISHIP_H
-#define BISHIP_H
-
 
 /*
- * Purpose: Creates Bishop Object
- * Functions/Methods:
- * 1. 
- * 
+  Class Bishop: public Piece {
+    public:
+      Bishop(string colour, int curX, int curY);
+      bool isValid(int endX, int endY);
+  };
 */
-class Bishop{
 
-};
-
-
-
-
-#endif
