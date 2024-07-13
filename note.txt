@@ -1,0 +1,56 @@
+CS 246 - Final Project!
+
+Team members: 
+Patricia
+Elaine 
+August
+
+Objective of this Meeting
+
+Chess
+
+How often do we want to to like meet and discuss about the project? 
+ We have A4 coming up next Friday, (12th July) and the week after we need to submit the part of documentations which will eventually be worthed 40%. We should get started this weekend on getting the documentation and UML done by this weekend. 
+What online collaborative tool we can use? 
+Visual Studio Code Live Share, CodePen, Repl.it and GitHub.
+
+Division of Labour (This should come after UML and we have a rough design of the Group Project.)
+
+Goal Alignment. 
+
+
+Brief Timeline for the Project
+
+Deadline: 
+19th June (UML + Plan of Attack) 
+26th June ( UML Final + Design)
+
+10th June - Interface
+12th June - UML + Plan (<= 5 pages)
+13th June - 20th June - Coding
+20th - 26th - Debugging, Adding New Feature, Documentations
+
+UML - We need to get the interface done by Wednesday (10th June), and finished up the Planning and UML by Friday (12th June), then we start coding latest by next week Saturday and get done coding latest by Sunday. That leaves us with the whole 4-5 days for debugging, adding new features and finalization. 
+
+
+Extra feature: 
+
+Undo and Redo Moves.
+Move History
+Timers and Clock
+Piece Highlighting
+Board Customization
+Game Variation (4-Player Game)
+Analysis Tool
+
+Execution
+
+Set up the board class
+Scoreboard
+Moving the Pieces
+Special functionality: Enpassant, Castling, KingCheck? 
+Player Class
+Piece Class
+Computer Level 1 - 4
+
+

@@ -1,0 +1,32 @@
+File to update individual Updates in corresponding files
+
+Elaine:
+- July 11
+  - file update: all
+  - Description:
+    - create empty *.h file
+- July13
+  - file update: biship.h, board.h, computerplayer.h, game.h, humanplayer.h, king.h, knight.h
+                 note.txt, pawn.h, piece.h, player.h, queen.h, rook.h update.txt
+  - Description:
+    - update and write the overall idea of interfaces. Needs further change/improvement and UML diagram
+
+
+
+
+
+
+
+
+
+Patricia:
+
+
+
+
+
+
+
+
+
+August:
