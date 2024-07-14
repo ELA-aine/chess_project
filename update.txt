@@ -25,7 +25,7 @@ Patricia:
 - July 14
   - file update: note.txt
   - description: corrected dates
-  - checking that github works
+  - checking if github works
 
 
 
