@@ -22,15 +22,18 @@ Goal Alignment.
 Brief Timeline for the Project
 
 Deadline: 
-19th June (UML + Plan of Attack) 
-26th June ( UML Final + Design)
+19th July (UML + Plan of Attack) 
+26th July ( UML Final + Design)
 
-10th June - Interface
-12th June - UML + Plan (<= 5 pages)
-13th June - 20th June - Coding
+10th July - Interface
+12th July - UML + Plan (<= 5 pages)
+13th July - 20th July - Coding
 20th - 26th - Debugging, Adding New Feature, Documentations
 
-UML - We need to get the interface done by Wednesday (10th June), and finished up the Planning and UML by Friday (12th June), then we start coding latest by next week Saturday and get done coding latest by Sunday. That leaves us with the whole 4-5 days for debugging, adding new features and finalization. 
+UML - We need to get the interface done by Wednesday (10th July), 
+and finished up the Planning and UML by Friday (12th July), 
+then we start coding latest by next week Saturday and get done coding latest by Sunday. 
+That leaves us with the whole 4-5 days for debugging, adding new features and finalization. 
 
 
 Extra feature: 

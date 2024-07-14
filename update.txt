@@ -20,7 +20,12 @@ Elaine:
 
 
 Patricia:
-
+- July 13
+  - as outlined by Elaine
+- July 14
+  - file update: note.txt
+  - description: corrected dates
+  - checking that github works
 
 
 
