@@ -30,3 +30,6 @@ Patricia:
 
 
 August:
+- July13
+ - as outlined by Elaine
+ - writing this to make sure the collaboration pipeline is intact on GitHub!
