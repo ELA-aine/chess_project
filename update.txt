@@ -10,6 +10,17 @@ Elaine:
                  note.txt, pawn.h, piece.h, player.h, queen.h, rook.h update.txt
   - Description:
     - update and write the overall idea of interfaces. Needs further change/improvement and UML diagram
+- July 16
+  - file update: board.h window.h
+  - Description:
+    - I add some extra feature such as boardHistory, which is made up of a string (the piece that the player use), and a Vec
+      where it stores if it is white/black, and store its coordinates. I guess this could be used to analyze another player's further
+      move, or may be delete last move. I'm not sure if we need to store all the history in it, or we could create two history
+      for each player. Further discussion needed;
+    - I add window.h, it's basically a copy from our assignment 4. Since we need a graphical presentation, I guess we could also add
+      observers...? Further discussion and change needed.
+    - doing UML diagram :D
+    - also I add some minor things to other interface (basically just removing the comment sign, no other big changes)
 
 
 
