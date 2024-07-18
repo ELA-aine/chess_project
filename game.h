@@ -23,15 +23,16 @@ class Game{
   };
 
 
-  map<string, Vec> whiteHistory;          // move history for white player
-  map<string, Vec> blackHistory;          // move history for black player
+  vector<string, Vec> whiteHistory;          // move history for white player
+  vector<string, Vec> blackHistory;          // move history for black player
   map<string, int> scoreBoard;            // score board for white player and black player
 
   public:
-    Game(Board *board, int level, string player1, string player2);      
+    Game(); 
+    void start(Player *white, Player *black);     
       // constructor of game, use string to decide what player we have for white and black
       //    and initialize the field accordingly
-    bool moveOrNot(string start, string end);
+    void makeMove(const string &from, const string &to, const string &promotion = ""); 
       // if CHECKMATE -> isWinner(whoever play)
       // if CHECK -> I don't know
       // else:
@@ -52,6 +53,9 @@ class Game{
     // display the winner message, set the winner score + 1;
     void addScore(string player);
     // set player's score + 1;
+    void resign(); // self-explanatory 
+    void printFinalScore() const; // self-explanatory
+    void setup(); // Elaine's idea
 
     //////////// Additional function for Additional feature, if needed ///////////////
 
@@ -61,42 +65,9 @@ class Game{
     // display last move from the history accordingly
     void analyze();
     // analyze current board and output possible move to output stream;
-
     // other additional method can be added
+    
 
 };
 
 #endif
-
-// #ifndef GAME_H
-
-// #define GAME_H
-
-// #include "Board.h"
-// #include "Player.h"
-
-// class Game {
-// public:
-//     Game(); 
-//     void start(Player *white, Player *black);
-//     void makeMove(const std::string &from, const std::string &to, const std::string &promotion = ""); // 
-//     void resign(); // self-explanatory 
-//     void setup(); // Elaine's idea
-//     void undoMove(); // if we have time for this extra feature 
-//     void printFinalScore() const; // self-explanatory
-
- // map<string, Vec> whiteHistory;          // move history for white player
- // map<string, Vec> blackHistory;          // move history for black player
- //map<string, int> scoreBoard;            // score board for white player and black player
-
-// private:
-//     Board board;
-//     Player *whitePlayer;
-//     Player *blackPlayer;
-//     bool gameInProgress;
-//     int whiteScore;
-//     int blackScore;
-//    .... to be continued 
-// };
-
-// #endif
