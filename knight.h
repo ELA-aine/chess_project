@@ -1,15 +1,13 @@
 #ifndef KNIGHT_H
 #define KNIGHT_H
-#include <iostream>
-#include <string>
-#include "piece.h"
 
-using namespace std;
+#include "Piece.h"
 
-  class Knight: public Piece {
-    public:
-      Knight(string colour, int curX, int curY);
-      bool isValid(int endX, int endY);
-  };
+class Knight : public Piece {
+public:
+    Knight(bool isWhite, char symbol);  // Constructor: Initializes Knight with color
+    bool isValidMove(const std::string &from, const std::string &to, const Board &board) const override;  // Overrides to check if the move is valid for a Knight
+    char getSymbol() const override;  // Provides the symbol for the Knight
+};
 
-#endif
+#endif // KNIGHT_H

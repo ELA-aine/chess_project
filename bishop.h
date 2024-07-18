@@ -1,15 +1,13 @@
 #ifndef BISHOP_H
 #define BISHOP_H
-#include <iostream>
-#include <string>
-#include "piece.h"
 
-using namespace std;
+#include "Piece.h"
 
-  class Bishop: public Piece {
-    public:
-      Bishop(string colour, int curX, int curY);
-      bool isValid(int endX, int endY);
-  };
+class Bishop : public Piece {
+public:
+    Bishop(bool isWhite, char symbol);  // Constructor: Initializes Bishop with color
+    bool isValidMove(const std::string &from, const std::string &to, const Board &board) const override;  // Overrides to check if the move is valid for a Bishop
+    char getSymbol() const override;  // Provides the symbol for the Bishop
+};
 
-#endif
+#endif // BISHOP_H

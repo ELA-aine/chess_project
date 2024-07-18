@@ -9,7 +9,7 @@ class Piece {
     bool white;
     char symbol;
   public:
-    Piece(bool white, char symbol);
+    Piece(bool isWhite, char symbol);
     virtual bool isValidMove(const std::string &from, const std::string &to, const Board &board) const = 0; 
     // Pure virtual method to check if a move is valid
     virtual ~Piece() = default;
