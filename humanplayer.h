@@ -1,12 +1,13 @@
-// #include player.h
+#ifndef HUMANPLAYER_H
+#define HUMANPLAYER_H
+#include "player.h"
 
 
 
-/*
-  class HumanPlayer : public Player {
+class HumanPlayer : public Player {
   public:
-  HumanPlayer(bool isWhite) :  Player(isWhite) {}
+  HumanPlayer(int level = 0, bool isWhite);
+  bool ismove(string coord);
+};
 
-  // 99999 lines of codes below:
-
-}*/
+#endif
