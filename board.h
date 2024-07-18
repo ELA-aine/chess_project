@@ -34,4 +34,32 @@ class Board {
    
 
 
+// #ifndef BOARD_H
+// #define BOARD_H
 
+// #include <vector>
+// #include <string>
+// #include "Piece.h"
+// #include "Move.h"
+
+// class Board {
+// public:
+//     Board();  // Constructor: Initializes the Board object
+//     void initialize();  // Sets up or resets the board to its initial state
+//     void display() const;  // Displays the current state of the board
+//     void movePiece(const std::string &from, const std::string &to, const std::string &promotion = "");  // Moves a piece on the board; optional promotion
+//     void undoLastMove();  // Undoes the last move made on the board
+//     bool isInCheck(bool white) const;  // Checks if the given color (white) is in check
+//     bool isInCheckmate(bool white) const;  // Checks if the given color (white) is in checkmate
+//     bool isStalemate() const;  // Checks if the game is in a stalemate
+//     bool currentTurnIsWhite() const;  // Returns true if it's White's turn
+//     void setup();  // Sets up the board for a new game or custom setup
+    
+// private:
+//     std::vector<std::vector<Piece*>> board;  // 2D vector representing the board; stores pointers to Piece objects. not poitner because vecor already manages memory!!!
+//     std::vector<Move> moveHistory;  // Vector of Move objects; keeps track of all moves made during the game
+//     bool whiteTurn;  // Boolean flag to indicate if it's White's turn (true) or Black's turn (false)
+//     void setupBoard();  // Helper method to initialize the board with pieces
+// };
+
+// #endif // BOARD_H

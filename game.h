@@ -67,3 +67,36 @@ class Game{
 };
 
 #endif
+
+// #ifndef GAME_H
+
+// #define GAME_H
+
+// #include "Board.h"
+// #include "Player.h"
+
+// class Game {
+// public:
+//     Game(); 
+//     void start(Player *white, Player *black);
+//     void makeMove(const std::string &from, const std::string &to, const std::string &promotion = ""); // 
+//     void resign(); // self-explanatory 
+//     void setup(); // Elaine's idea
+//     void undoMove(); // if we have time for this extra feature 
+//     void printFinalScore() const; // self-explanatory
+
+ // map<string, Vec> whiteHistory;          // move history for white player
+ // map<string, Vec> blackHistory;          // move history for black player
+ //map<string, int> scoreBoard;            // score board for white player and black player
+
+// private:
+//     Board board;
+//     Player *whitePlayer;
+//     Player *blackPlayer;
+//     bool gameInProgress;
+//     int whiteScore;
+//     int blackScore;
+//    .... to be continued 
+// };
+
+// #endif
