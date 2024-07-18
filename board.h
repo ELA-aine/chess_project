@@ -31,7 +31,7 @@ class Board {
     virtual void getPiece(string coord);
     // return PIECE at COORD in BOARD
 };
-   
+
 
 
 // #ifndef BOARD_H
