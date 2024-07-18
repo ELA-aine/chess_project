@@ -13,3 +13,16 @@ using namespace std;
   };
 
 #endif
+
+// #ifndef ROOK_H
+// #define ROOK_H
+
+// #include "Piece.h"
+
+// class Rook : public Piece {
+// public:
+//     Rook(bool isWhite);  // Constructor: Initializes Rook with color
+//     bool isMoveValid(const std::string &from, const std::string &to, const Board &board) const override;  // Overrides to check if the move is valid for a Rook
+// };
+
+// #endif // ROOK_H
