@@ -21,7 +21,29 @@ Elaine:
       observers...? Further discussion and change needed.
     - doing UML diagram :D
     - also I add some minor things to other interface (basically just removing the comment sign, no other big changes)
-
+- July 17
+  - file update: *.h except window.have, main.cc
+  - Description:
+    - for main.cc, I write an example program in main() so that we could have a general idea of what functionality we need for each command
+      They can be changed, but I think that's generally how the program works, Will be adding more as we go further.
+    - for board.h, player.h, and game.h, please see the documentation in them. I add MANNNNNY things to it. 
+      Check main.cc first and then check game.h and board.h to have a better understanding!
+      Further change may apply, this is what I think what we should do in those two files.
+      Basically, board.h is responsible for creating board, and managing element (in this case, piece(s)) in the board, and display
+                 game.h is any function that is directly related to the progress of the game. 
+                    see main.cc for better understanding.
+    - for player.h, i add a level to distinguish from human and computer. 
+      Obviously, human is level 0 since the behaviour is not determined by computer
+      computer has different level, and move according to the given level.
+    - for other *.h, which is king, queen, knight...etc, I just remove the comment, nothing more is changed.
+  
+  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
+  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
+  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
+  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
+  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
+  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
+  
 
 
 

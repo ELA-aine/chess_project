@@ -12,29 +12,24 @@
 
 using namespace std;
 
+// purpose: To create a board
+// Abstract Class
+
 class Board {
-  int board[8][8];
-
-  class Vec{
-    public:
-    string player;
-    int x, y;
-  };
-
-  map<string, Vec> boardHistory;
-
-  
+  vector<vector<Piece>> *board;         // creating a 8 * 8 board
   public:
-  Board();
-  
-  void init();
-  bool moveOrNot(Piece *whatPiece, int startX, int startY, int endX, int endY);
-    //move the piece of it is valid, true could be valid, false is not valid
-  void display();// (or ostream)
-  bool isCheck();
-  //check bincheck (may be put in King class)
-  bool isCheckMate();
-    // lost the game
+    Board();      // constructing a board;
+    virtual void init();    // initializing a board by putting all the necessary piece in *board
+    virtual void display();// (or ostream)
+    // display/output the current board
+    virtual void setBoard(char piece, string coord);
+    // set PIECE at COORD, replace if COORD already has a piece
+    // restriction: pawn is not at first row or last row
+    //              special piece can only appear once in the board
+    virtual void removeCoord(string coord);
+    // remove PIECE at current COORD:
+    virtual void getPiece(string coord);
+    // return PIECE at COORD in BOARD
 };
    
 

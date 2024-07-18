@@ -1,16 +1,18 @@
-// #include player.h
+#ifndef COMPUTERPLAYER_H
+#define COMPUTERPLAYER_H
+#include "player.h"
 
 
 
-/*
-  class ComputerPlayer : public Player {
-  int level;
-
-
+class ComputerPlayer : public Player {
   public:
-  ComputerPlayer(bool isWhite) :  Player(isWhite) {}
-  
+  ComputerPlayer(int level, bool isWhite);
+  bool isMove(string coord);
 
-  // 99999 lines of codes below:
+  /*
+    Question:
+      I was thinking for computer's move, do we do different move function for each level? 
+  */
+};
 
-}*/
+#endif
