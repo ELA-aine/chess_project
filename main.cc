@@ -1,17 +1,17 @@
-#include <map>
 #include <iostream>
+#include <string>
+#include "Game.h"
+#include "Player.h"
+#include "HumanPlayer.h"
+#include "ComputerPlayer.h"
 
-// other necessary #includes
-
-using namespace std;
-
-
+/*
 int main() {
   
   bool isGame = false;
 
 
-  /*
+
     Board *board;
     string command;
     Game game;
@@ -72,6 +72,85 @@ int main() {
         game.isWinner(string OppositeWinner)         //not know how to decide;
         isGame = false;
       } 
-  */ 
   
 }
+
+  */ 
+
+#include <iostream>
+#include <string>
+#include "Game.h"
+#include "Player.h"
+#include "HumanPlayer.h"
+#include "ComputerPlayer.h"
+
+// below is basically the same as the code elaine written, but i am trying to complete it. I also try to embed the set-up to be implemented by game so it looked cleaner, and differs a bit in terms of handling the computer level logic. subject to changes !
+
+int stringToInt(std::string) {
+  // ...
+}
+
+int main() {
+    Game game;
+
+    std::string command;
+    while (std::cin >> command) {
+       // starting a game 
+        if (command == "game") {
+            std::string whitePlayerType, blackPlayerType;
+            std::cin >> whitePlayerType >> blackPlayerType; // so the contract is always the first type string after game is whitePlayer, and second is blackPlayer, option: [human/computer] like Elaine wrote
+
+            Player *whitePlayer = nullptr; // initialize a new string to Player type
+            Player *blackPlayer = nullptr;
+
+            if (whitePlayerType == "human") { // the logic here is to set the Player correctly according to type
+                whitePlayer = new HumanPlayer(true); // constructor 
+            } else if (whitePlayerType.rfind("computer", 0) == 0) { // we are writing the level like computer1 computer2 etc so this line checks if the first substring is computer.
+                int level = stringToInt(whitePlayerType.substr(8)); // then we could check the last number and convert it to interger
+                whitePlayer = new ComputerPlayer(true, level);
+            }
+
+            if (blackPlayerType == "human") {
+                blackPlayer = new HumanPlayer(false);
+            } else if (blackPlayerType.rfind("computer", 0) == 0) {
+                int level = std::stoi(blackPlayerType.substr(8));
+                blackPlayer = new ComputerPlayer(false, level); // i think through it and agree with patricia, using boolean to represent whether it is black or white is easier when constructing a player. i use false for black and true for white. we could discuss further. 
+            }
+
+            game.start(whitePlayer, blackPlayer); // I am assuming this will create a copy of the players so i delete the players next line.
+
+            // Clean up dynamically allocated memory
+            delete whitePlayer;
+            delete blackPlayer;
+
+        } else if (command == "move") {
+            std::string from, to, promotion;
+            std::cin >> from >> to;
+            if (std::cin.peek() != '\n') { // each command line is separated by a newline character
+                std::cin >> promotion;
+            }
+            game.makeMove(from, to, promotion); // promotion can be set as a optional parameter, because not every move could be promotion
+        } else if (command == "resign") {
+            game.resign();
+        } else if (command == "setup") { // look at Elaine's code
+            game.setup();
+        } else if (command == "undo") {
+            game.undoMove();
+        }
+    }
+
+    game.printFinalScore();
+    return 0;
+}
+
+example command:
+
+game 
+human
+computer3 // black is computer level 3
+move e2 e4 // white
+move something something // black
+...
+move e7 e8 Q // promotion
+... 
+resign // I am tired of chess and Waterloo ughhh
