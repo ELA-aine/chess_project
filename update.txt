@@ -59,6 +59,8 @@ Patricia:
   - file update: note.txt
   - description: corrected dates
   - checking if github works
+- July 19
+  - added DD1 UML
 
 
 
