@@ -36,13 +36,8 @@ Elaine:
       Obviously, human is level 0 since the behaviour is not determined by computer
       computer has different level, and move according to the given level.
     - for other *.h, which is king, queen, knight...etc, I just remove the comment, nothing more is changed.
-  
-  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
-  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
-  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
-  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
-  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
-  PLEASE ATTENDING MEETING TMMMMMRR PLEASE I BEG YOU
+-July 19
+  - add plan.pdf
   
 
 
