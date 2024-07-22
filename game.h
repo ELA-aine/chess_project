@@ -5,6 +5,10 @@
 #include "piece.h"
 #include <map>
 #include <string>
+#include <memory>
+
+//new include
+#include <utility>
 
 using namespace std;
 
@@ -12,24 +16,29 @@ using namespace std;
 
 class Game{
   int level = 0;          // set level to the game. 0 means human player, anything from 1-4 means computer player
-  Board *board;           // the game board, see board.h for documentation
-  Player *player1;        // player1, human/computer
-  Player *player2;        // player2, human/computer       
+  unique_ptr<Board> board;           // the game board, see board.h for documentation
+  unique_ptr<Player> player1;        // player1, human/computer
+  unique_ptr<Player> player2;
+  //Board *board;           // the game board, see board.h for documentation
+ // Player *player1;        // player1, human/computer
+  //Player *player2;        // player2, human/computer       
   bool isWhite = true;    // current player. Default starts from white
 
    class Vec{             // this class is for storing the coordinate.        
     public:               // although coordinate's input is char + int, but we can convert char to int
-    int x, y;             //    so that we could iterate over the board easily
+    //    
+    string from, to;
+    Vec(string from, string to) : from(from), to(to) {}         //    so that we could iterate over the board easily
   };
 
-
-  vector<string, Vec> whiteHistory;          // move history for white player
-  vector<string, Vec> blackHistory;          // move history for black player
+  // change stirng, vec to pair<char, vec>
+  vector<pair<char, Vec>> whiteHistory;  // move history for white player
+  vector<pair<char, Vec>> blackHistory;          // move history for black player
   map<string, int> scoreBoard;            // score board for white player and black player
 
   public:
     Game(); 
-    void start(Player *white, Player *black);     
+    void start(unique_ptr<Player> white, unique_ptr<Player> black);     
       // constructor of game, use string to decide what player we have for white and black
       //    and initialize the field accordingly
     void makeMove(const string &from, const string &to, const string &promotion = ""); 
@@ -49,12 +58,15 @@ class Game{
     // Note: I don't know if we really need a function to set isWhite to !isWhite (and vice versa)
     //       this is just a function to keep track what current player is so that we could use
     //       PLAYER's method accordingly.
-    void isWinner(string player);         
+    void isWinner(bool white);         
     // display the winner message, set the winner score + 1;
-    void addScore(string player);
+    // change from string player to bool white
+    void addScore(bool white);
     // set player's score + 1;
+    // change from string player to bool white
     void resign(); // self-explanatory 
-    void printFinalScore() const; // self-explanatory
+    void printFinalScore(); // self-explanatory
+    // delete const
     void setup(); // Elaine's idea
 
     //////////// Additional function for Additional feature, if needed ///////////////

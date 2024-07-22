@@ -12,6 +12,7 @@
 #include "rook.h"
 #include "bishop.h"
 #include "move.h"
+#include <memory>
 
 using namespace std;
 
@@ -19,8 +20,12 @@ using namespace std;
 // Abstract Class
 
 class Board {
-  vector<vector<Piece>> *board;         // creating a 8 * 8 board
-  vector<Move> moveHistory;
+  protected:
+    unique_ptr<vector<vector<unique_ptr<Piece>>>> board;
+    //<vector<vector<Piece>>> *board;         // creating a 8 * 8 board
+    vector<Move> moveHistory;
+    map<char, int> coordinate;
+
   public:
     Board();      // constructing a board;
     virtual void init();    // initializing a board by putting all the necessary piece in *board
@@ -33,14 +38,17 @@ class Board {
     //              special piece can only appear once in the board
     virtual void removeCoord(string coord);
     // remove PIECE at current COORD:
-    virtual void getPiece(string coord);
+    virtual Piece *getPiece(string coord);
     // return PIECE at COORD in BOARD
     void undoLastMove();  // Undoes the last move made on the board
     bool isInCheck(bool white) const;  // Checks if the given color (white) is in check
     bool isInCheckmate(bool white) const;  // Checks if the given color (white) is in checkmate
     bool isStalemate() const;  // Checks if the game is in a stalemate
-    bool currentTurnIsWhite() const;  // Returns true if it's White's turn
+    //bool currentTurnIsWhite() const;  // Returns true if it's White's turn
     void setup();  // Sets up the board for a new game or custom setup
+
+    // additional
+    void findPiece(char piece);
     
 };
 
