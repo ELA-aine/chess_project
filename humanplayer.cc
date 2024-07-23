@@ -1,15 +1,10 @@
-#ifndef HUMANPLAYER_H
-#define HUMANPLAYER_H
+
 #include "humanplayer.h"
 
 HumanPlayer::HumanPlayer(bool isWhite) : Player{isWhite} {}
 
-std::string HumanPlayer::makeMove(Board *board) override {
+std::string HumanPlayer::makeMove(Board *board, const std::string &from, const std::string &to, const std::string &promotion) {
     // read in to, from, promotion
-
-    std::string to;
-    std::string from;
-    std::string promotion;
     bool canMove;
 
     Piece* movedPiece = board->getPiece(from);
@@ -18,7 +13,7 @@ std::string HumanPlayer::makeMove(Board *board) override {
 
 
 
-    if (movedPiece) { // check valid move
+    if (movedPiece) { // check piece exists
         // check correct side
         if ('a' < symbol && symbol < 'z') { // black
             // getColor() might work better here
@@ -29,7 +24,7 @@ std::string HumanPlayer::makeMove(Board *board) override {
             }
 
         } else { // white
-        
+
             if (!isWhite) { // black
                 canMove = false;
             } else {
@@ -48,6 +43,3 @@ std::string HumanPlayer::makeMove(Board *board) override {
     }
 
 }
-
-
-#endif
