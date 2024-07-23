@@ -14,7 +14,7 @@ class HumanPlayer : public Player {
   
   public:
   HumanPlayer(bool isWhite);
-  std::string makeMove(Board *board) override;
+  std::string makeMove(Board *board, const std::string &from, const std::string &to, const std::string &promotion) override;
 };
 
 #endif

@@ -52,9 +52,15 @@ class Board {
 
 
     // for player implementation
-    map<string, char> pieceCoords(bool white); // returns the coordinates of pieces left on board 
-    map<string, string> possibleMoves(string coord, Piece *piece); // returns possible moves for piece
+    map<string, char> pieceCoords(bool isWhite); // returns the coordinates of pieces left on board 
+    map<string, int> possibleMoves(string coord, Piece *piece); // returns possible moves for piece
     // <coord, type (capture)>
+    // maybe
+    // checkmate -> 4
+    // check -> 3
+    // capture -> 2
+    // normal -> 1
+    map<map<string, char>, vector<map<string, int>>> allMoves(bool isWhite); // finds all possible moves and classifies
     
 };
 

@@ -15,6 +15,8 @@ class Piece {
     virtual ~Piece() = default;
     virtual char getSymbol() const = 0;
 
+    // added for player classes:
+    bool canPromote(string coord); // determines whether piece can be promoted
 
 };
 
