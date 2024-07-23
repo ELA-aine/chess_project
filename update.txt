@@ -56,6 +56,9 @@ Patricia:
   - checking if github works
 - July 19
   - added DD1 UML
+- July 23
+  - added humanplayer.cc, computerplayer.cc
+  - updated board.h humanplayer.h computerplayer.h player.has
 
 
 
