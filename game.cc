@@ -16,25 +16,32 @@ void Game::start(unique_ptr<Player> white, unique_ptr<Player> black) {
 
 void Game::makeMove(const string &from, const string &to, const string &promotion = "") {
   char thePiece = board->getPiece(from).getSymbol();
-  bool valid = board->getPiece(from).isValidMove(from, to, board);
-  Vec toCoord = {from, to};
-  
-  if (!valid) {
-    cout << "Not valid move, move again" << endl;
+  if (isWhite) {
+    string valid = player1.makeMove(board, from, to);
+    if (valid == "invalid move") {
+      cout << valid;
+    }
+  } else {
+    string valid = player2.makeMove(board, from, to);
+    if (valid == "invalid move") {
+      cout << valid;
+    }
   }
 
-   if (isWhite) {
-        whiteHistory.push_back({thePiece, toCoord});
-    } else {
-        blackHistory.push_back({thePiece, toCoord});
-    }
-    
-    changePlayer();
-    display();
+  changePlayer();
+  display();
+
+  
 }
 
 bool Game::isCheck() {
-  return false;
+  if (isWhite && board->isInCheck(true)) {
+    return true;
+  } else if (!isWhite && board->isInCheck(false)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 bool Game::isCheckMate() {

@@ -24,7 +24,6 @@ class Board {
     unique_ptr<vector<vector<unique_ptr<Piece>>>> board;
     //<vector<vector<Piece>>> *board;         // creating a 8 * 8 board
     vector<Move> moveHistory;
-    map<char, int> coordinate;
 
   public:
     Board();      // constructing a board;
@@ -38,7 +37,7 @@ class Board {
     //              special piece can only appear once in the board
     virtual void removeCoord(string coord);
     // remove PIECE at current COORD:
-    virtual Piece *getPiece(string coord);
+    virtual Piece *getPiece(const string &coord);
     // return PIECE at COORD in BOARD
     void undoLastMove();  // Undoes the last move made on the board
     bool isInCheck(bool white) const;  // Checks if the given color (white) is in check
