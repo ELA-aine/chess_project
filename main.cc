@@ -143,14 +143,14 @@ int main() {
     return 0;
 }
 
-example command:
+// example command:
 
-game 
-human
-computer3 // black is computer level 3
-move e2 e4 // white
-move something something // black
-...
-move e7 e8 Q // promotion
-... 
-resign // I am tired of chess and Waterloo ughhh
+// game 
+// human
+// computer3 // black is computer level 3
+// move e2 e4 // white
+// move something something // black
+// ...
+// move e7 e8 Q // promotion
+// ... 
+// resign // I am tired of chess and Waterloo ughhh

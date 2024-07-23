@@ -2,12 +2,19 @@
 #define HUMANPLAYER_H
 #include "player.h"
 
+#include <vector>
+#include <map>
+#include <string>
+#include <iostream>
+
 
 
 class HumanPlayer : public Player {
+  bool isWhite;
+  
   public:
   HumanPlayer(bool isWhite);
-  void makeMove(Board *board) override;
+  std::string makeMove(Board *board) override;
 };
 
 #endif

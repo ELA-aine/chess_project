@@ -3,8 +3,14 @@
 #include <iostream>
 #include "board.h"
 
+#include "king.h"
+#include "queen.h"
+#include "knight.h"
+#include "pawn.h"
+#include "rook.h"
+#include "bishop.h"
+
 // Abstract class for player
-// also other #include for each piece, too lazy to put here now
 
 class Player{
   protected:
@@ -12,7 +18,7 @@ class Player{
 
   public:
     Player(bool isWhite) :isWhite(isWhite){} // true = white, false = black 
-    virtual void makeMove(Board *board) = 0;
+    virtual std::string makeMove(Board *board) = 0;
     // determine if player can move or not
     // some other function
     virtual ~Player();
