@@ -3,15 +3,15 @@
 
 HumanPlayer::HumanPlayer(bool isWhite) : Player{isWhite} {}
 
-std::string HumanPlayer::makeMove(Board *board, const std::string &from, const std::string &to, const std::string &promotion) {
-    // read in to, from, promotion
+std::string HumanPlayer::makeMove(Board *board, const std::string &from, 
+    const std::string &to, const std::string &promotion) {
+
     bool canMove;
+    string isCheck = "no"; // default to no
 
     Piece* movedPiece = board->getPiece(from);
     char symbol = movedPiece->getSymbol(); 
     // or getColor() might work better
-
-
 
     if (movedPiece) { // check piece exists
         // check correct side
@@ -32,12 +32,13 @@ std::string HumanPlayer::makeMove(Board *board, const std::string &from, const s
             }
 
         }
+        // check isCheck and isCheckMate,
     } else {
         canMove = false;
     }
 
     if (canMove) {
-        return to + from + promotion;
+        return to + from + promotion + isCheck;
     } else {
         return "invalid move";
     }

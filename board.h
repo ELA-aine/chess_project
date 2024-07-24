@@ -54,7 +54,7 @@ class Board {
 
     // for player implementation
     map<string, char> pieceCoords(bool isWhite); // returns the coordinates of pieces left on board 
-    map<string, int> possibleMoves(string coord, Piece *piece); // returns possible moves for piece
+    vector<map<string, int>> possibleMoves(string coord); // returns possible moves for piece
     // <coord, type (capture)>
     // maybe
     // checkmate -> 4
