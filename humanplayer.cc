@@ -20,7 +20,7 @@ std::string HumanPlayer::makeMove(Board *board, const std::string &from,
             if (isWhite) { // white
                 canMove = false;
             } else {
-                canMove = movedPiece->isValidMove(from, to, *board);
+                canMove = movedPiece->isValidMove(from, to, board); // board is now a unique_ptr
             }
 
         } else { // white
@@ -28,7 +28,7 @@ std::string HumanPlayer::makeMove(Board *board, const std::string &from,
             if (!isWhite) { // black
                 canMove = false;
             } else {
-                canMove = movedPiece->isValidMove(from, to, *board);
+                canMove = movedPiece->isValidMove(from, to, board);
             }
 
         }
