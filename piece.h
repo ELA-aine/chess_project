@@ -21,6 +21,7 @@ public:
    virtual ~Piece() = default;
    virtual char getSymbol() const = 0;
    bool isWhite() const { return white; }
+   bool can_promote(string coord);
 };
 
 
