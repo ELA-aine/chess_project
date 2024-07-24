@@ -19,7 +19,7 @@ class ComputerPlayer : public Player {
     std::string level1(Board *board, bool isWhite);
     std::string level2(Board *board, bool isWhite);
     std::string level3(Board *board, bool isWhite);
-    std::string level4(Board *board, bool isWhite);
+    std::string level4(Board *board, bool isWhite, int depth);
 
 };
 

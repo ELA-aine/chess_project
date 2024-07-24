@@ -154,4 +154,32 @@ Piece* Board::getPiece(const string &coord) const{
 
     cout << "  abcdefgh" << endl;
   }
-    
+
+
+
+
+
+
+// for player implementations:
+map<string, char> Board::pieceCoords(bool isWhite) {
+  // returns the coordinates of pieces left on board
+
+} 
+
+
+vector<map<string, int>> Board::possibleMoves(string coord) {
+  // returns possible moves for piece
+  // <coord, type (capture)>
+  // maybe
+  // checkmate -> 4
+  // check -> 3
+  // capture -> 2
+  // normal -> 1
+
+} 
+map<map<string, char>, vector<map<string, int>>> Board::allMoves(bool isWhite) {
+  // finds all possible moves and classifies
+
+  
+} // finds all possible moves and classifies
+
