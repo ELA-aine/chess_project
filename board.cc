@@ -14,12 +14,16 @@ const int COL = 8;
   //vector<Move> moveHistory;
 
   Board::Board() {
-    board = make_unique<vector<vector<unique_ptr<Piece>>>>(8, vector<unique_ptr<Piece>>(8));
+    auto board = make_unique<vector<vector<unique_ptr<Piece>>>>();
+    board->resize(8);
+    for (auto& row : *board) {
+        row.resize(8);
+    }
   }     // constructing a board;
 
   void Board::init() {
     //board = vector<vector<Piece>>(8, vector<Piece>(8));
-    setup();
+    setupBoard();
   }   // initializing a board by putting all the necessary piece in *board
     
     void Board::setupBoard() {
@@ -31,31 +35,37 @@ const int COL = 8;
       setBoard('b', "f8");
       setBoard('q', "d8");
       setBoard('k', "e8");
-      // set pawn
+      setBoard('p', "a7");
+      setBoard('p', "b7");
+      setBoard('p', "c7");
+      setBoard('p', "d7");
+      setBoard('p', "e7");
+      setBoard('p', "f7");
+      setBoard('p', "g7");
+      setBoard('R', "a1");
+      setBoard('R', "h1");
+      setBoard('N', "b1");
+      setBoard('N', "g1");
+      setBoard('B', "c1");
+      setBoard('B', "f1");
+      setBoard('Q', "d1");
+      setBoard('K', "e1");
+      setBoard('P', "a2");
+      setBoard('P', "h2");
+      setBoard('P', "b2");
+      setBoard('P', "g2");
+      setBoard('P', "c2");
+      setBoard('P', "f2");
+      setBoard('P', "d2");
+      setBoard('P', "e2");
       
-
-      setBoard('R', "a8");
-      setBoard('R', "h8");
-      setBoard('N', "b8");
-      setBoard('N', "g8");
-      setBoard('B', "c8");
-      setBoard('B', "f8");
-      setBoard('Q', "d8");
-      setBoard('K', "e8");
       // set PAWN
 
     }
     void Board::setBoard(char piece, string coord) {
-      coordinate['a'] = 0;
-      coordinate['b'] = 1;
-      coordinate['c'] = 2;
-      coordinate['d'] = 3;
-      coordinate['e'] = 4;
-      coordinate['f'] = 5;
-      coordinate['g'] = 6;
-      coordinate['h'] = 7;
-      int row = coordinate.at(coord.at(0));
-      int col = stoi(coord) - 1;
+      
+      int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
+      int row = 8 - stoi(coord.substr(1));
 
       switch(piece) {
         case 'K': 
@@ -102,31 +112,52 @@ const int COL = 8;
     // restriction: pawn is not at first row or last row
     //              special piece can only appear once in the board
     void Board::removeCoord(string coord) {
-      int row = coordinate.at(coord.at(0));
-      int col = stoi(coord) - 1;
+      int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
+      int row = 8 - stoi(coord.substr(1));
       (*board)[row][col] = nullptr;
     }
     // remove PIECE at current COORD:
-    Piece *Board::getPiece(string coord){
+Piece* Board::getPiece(const string &coord) {
+    // Extract the row and column from the coordinate string
+    int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
+    int row = 8 - stoi(coord.substr(1));  // Convert '1'-'8' to 7-0 (assuming bottom-left is (0,0))
 
-    }
+    // Return the piece at the given position (row, col)
+    return (*board)[row][col].get();
+}
+
     // return PIECE at COORD in BOARD
     void Board::undoLastMove() {
 
     }
     bool Board::isInCheck(bool white) const {
+      if (white) {
+
+      }
 
     }
     bool Board::isInCheckmate(bool white) const {
       
     }
-    bool isStalemate() const;  // Checks if the game is in a stalemate
-    bool currentTurnIsWhite() const;  // Returns true if it's White's turn
+    bool Board::isStalemate() const {
+
+    }  // Checks if the game is in a stalemate
     //void setup();  // Sets up the board for a new game or custom setup
 
     void Board::display() {
-      for (auto it = board->begin(); it != board->end(); it++) {
-
-      }
+      for (int row = 0; row < 8; ++row) {
+        int curRow = 8 - row;  // Calculate the current row number in descending order
+        cout << curRow << " ";  // Print the current row number
+        for (const auto& cell : (*board)[row]) {
+            if (cell) {
+                cout << cell->getSymbol();
+            } else {
+                cout << "_";
+            }
+        }
+        cout << endl;
     }
+
+    cout << "  abcdefgh" << endl;
+  }
     
