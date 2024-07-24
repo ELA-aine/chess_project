@@ -15,14 +15,14 @@ void Game::start(unique_ptr<Player> white, unique_ptr<Player> black) {
 }
 
 void Game::makeMove(const string &from, const string &to, const string &promotion = "") {
-  char thePiece = board->getPiece(from).getSymbol();
+  char thePiece = board->getPiece(from)->getSymbol();
   if (isWhite) {
-    string valid = player1->makeMove(board, from, to);
+    string valid = player1->makeMove(board, from, to, promotion);
     if (valid == "invalid move") {
       cout << valid;
     }
   } else {
-    string valid = player2->makeMove(board, from, to);
+    string valid = player2->makeMove(board, from, to, promotion);
     if (valid == "invalid move") {
       cout << valid;
     }

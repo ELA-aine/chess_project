@@ -120,10 +120,23 @@ Piece* Board::getPiece(const string &coord) const{
     return (*board)[row][col].get();
 }
 
-    // return PIECE at COORD in BOARD
-    void Board::undoLastMove() {
+void Board::addMove(string from, string to, string piece, string promotion = "", string capture = "") {
+  moveHistory.emplace_back(make_unique<Move>(from, to, piece, promotion, capture));
+}
 
-    }
+
+
+
+void Board::undoLastMove() {
+  auto size = moveHistory.size();
+  unique_ptr<Move> temp = move(moveHistory.at(size - 1));
+
+  
+}
+
+
+
+
     bool Board::isInCheck(bool white) const {
       std::string kingPosition;
       // this should be used in makeMove and isInCheck in game.h
@@ -227,6 +240,8 @@ bool Board::isStalemate(bool white) const {
 
     cout << "  abcdefgh" << endl;
   }
+
+
 
 
 
