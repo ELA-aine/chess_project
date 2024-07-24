@@ -16,9 +16,8 @@ const int COL = 8;
   }     // constructing a board;
 
   void Board::init() {
-    //board = vector<vector<Piece>>(8, vector<Piece>(8));
     setupBoard();
-  }   // initializing a board by putting all the necessary piece in *board
+  } 
     
     void Board::setupBoard() {
       setBoard('r', "a8");
@@ -125,16 +124,12 @@ void Board::addMove(string from, string to, string piece, string promotion = "",
 }
 
 
-
-
 void Board::undoLastMove() {
   auto size = moveHistory.size();
   unique_ptr<Move> temp = move(moveHistory.at(size - 1));
 
   
 }
-
-
 
 
     bool Board::isInCheck(bool white) const {
