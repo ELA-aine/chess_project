@@ -1,5 +1,4 @@
-#include "Pawn.h"
-#include "Board.h"
+#include "pawn.h"
 #include <cmath> // For std::abs
 
 // Constructor: Initializes Pawn with color and symbol

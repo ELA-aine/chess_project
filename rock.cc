@@ -1,5 +1,4 @@
-#include "Rook.h"
-#include "Board.h"
+#include "rook.h"
 #include <cmath>
 
 
