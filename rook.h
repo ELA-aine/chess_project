@@ -1,13 +1,22 @@
 #ifndef ROOK_H
 #define ROOK_H
 
+
 #include "Piece.h"
+#include <memory>
+#include <string>
+
 
 class Rook : public Piece {
 public:
-    Rook(bool isWhite, char symbol);  // Constructor: Initializes Rook with color
-    bool isValidMove(const std::string &from, const std::string &to, const Board &board) const override;  // Overrides to check if the move is valid for a Rook
-    char getSymbol() const override;  // Provides the symbol for the Rook
+   Rook(bool isWhite, char symbol); // Constructor
+   bool isValidMove(const std::string &from, const std::string &to, const std::unique_ptr<Board> &board) const override; // Overrides to check if the move is valid for a Rook
+   bool hasMoved() const; // Checks if the Rook has moved
+   void setMoved(bool moved); // Sets the moved status of the Rook
+    char getSymbol() const override;
+private:
+   bool moved; // Indicates whether the Rook has moved
 };
+
 
 #endif // ROOK_H

@@ -6,7 +6,7 @@
 class Pawn : public Piece {
 public:
     Pawn(bool isWhite, char symbol);  // Constructor: Initializes Pawn with color
-    bool isValidMove(const std::string &from, const std::string &to, const Board &board) const override;  // Overrides to check if the move is valid for a Pawn
+    bool isValidMove(const std::string &from, const std::string &to, const std::unique_ptr<Board> &board) const override;  // Overrides to check if the move is valid for a Pawn
     char getSymbol() const override;  // Provides the symbol for the Pawn
 
     bool isEnPassantMove(const std::string &from, const std::string &to, const Board &board) const;  // Checks if the move is an en passant capture
