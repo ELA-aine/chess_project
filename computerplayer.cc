@@ -203,7 +203,7 @@ int evaluateBoard(Board *board, bool isWhite) {
     if ((*board).isInCheckmate(isWhite)) {
         return isWhite ? -9999 : 9999;
         // replace with <limits> int min max
-    } else if ((*board).isStalemate()) {
+    } else if ((*board).isStalemate(isWhite)) {
         return 0;
     }
 
@@ -257,7 +257,7 @@ int miniMax(Board *board, int depth, int alpha, int beta, bool isMaxPlayer, bool
         int maxEval = numeric_limits<int>::min();
         for (it = allMoves.begin(); it != allMoves.end(); ++it) {
             const string move = allMoves->first.first + allMoves->second.second;
-            
+
             (*board).makeAMove(move);
             int eval = miniMax(board, depth - 1, alpha, beta, false, isWhite);
             (*board).undoMove(move);
