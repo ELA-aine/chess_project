@@ -152,12 +152,48 @@ Piece* Board::getPiece(const string &coord) const{
         }
     }
 } 
-    bool Board::isInCheckmate(bool white) const {
+    bool Board::isInCheckmate(bool white) const { // meaning no legals moves but is not in check.
       
     }
-    bool Board::isStalemate() const {
+  bool Board::isStalemate(bool white) const {
+    // Check if the player is in check
+    if (isInCheck(white)) {
+        return false;
+    }
 
-    }  // Checks if the game is in a stalemate
+    // Get the coordinates of all pieces of the given color
+    map<string, char> pieces = pieceCoords(white);
+
+    // Iterate over all pieces
+    for (const auto &entry : pieces) {
+        string coord = entry.first;
+        Piece *piece = getPiece(coord);
+
+        // Get possible moves for the current piece
+        vector<map<string, int>> moves = possibleMoves(coord); 
+
+        // Check if there is at least one legal move
+        for (const auto &move : moves) {
+            // Create a temporary board to simulate the move
+            auto tempBoard = make_unique<vector<vector<unique_ptr<Piece>>>>(*board);
+            string targetCoord = move.begin()->first;
+            Piece *targetPiece = getPiece(targetCoord);
+            
+            // Move the piece on the temporary board
+            (*tempBoard)[targetCoord[1] - '1'][targetCoord[0] - 'a'] = move(board[coord[1] - '1'][coord[0] - 'a']); // fix later
+            (*tempBoard)[coord[1] - '1'][coord[0] - 'a'].reset();
+
+            // Check if the move leaves the player in check
+            if (!isInCheck(white)) {
+                return false; // There is at least one legal move
+            }
+        }
+    }
+
+    // If no legal moves are found, it's a stalemate
+    return true;
+}
+ // meaning no legals moves but is not in check.
     //void setup();  // Sets up the board for a new game or custom setup
 
     void Board::display() {
