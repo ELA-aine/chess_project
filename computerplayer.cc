@@ -117,7 +117,7 @@ string ComputerPlayer::level3(Board *board, bool isWhite) {
     
     // same from level2, make helper later
     // take all opponent moves
-    map<map<string, char>, vector<map<string, int>>> allMovesOpp = (*board).allMoves(isWhite);
+    map<map<string, char>, map<string, int>> allMovesOpp = (*board).allMoves(isWhite);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     map<int, vector<map<map<string, string>, char>>> priorityMoves;
     // <move value, <to, from>>
