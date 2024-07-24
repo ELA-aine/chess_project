@@ -6,12 +6,6 @@ using namespace std;
 const int ROW = 8;
 const int COL = 8;
 
-// purpose: To create a board
-// Abstract Class
-
-
-  //vector<vector<Piece>> *board;         // creating a 8 * 8 board
-  //vector<Move> moveHistory;
 
   Board::Board() {
     auto board = make_unique<vector<vector<unique_ptr<Piece>>>>();
