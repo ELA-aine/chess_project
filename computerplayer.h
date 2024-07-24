@@ -15,11 +15,11 @@ class ComputerPlayer : public Player {
     bool isWhite;
   public:
     ComputerPlayer(int level, bool isWhite);
-    std::string makeMove(Board *board, const std::string &from, const std::string &to, const std::string &promotion) override;
-    std::string level1(Board *board, bool isWhite);
-    std::string level2(Board *board, bool isWhite);
-    std::string level3(Board *board, bool isWhite);
-    std::string level4(Board *board, bool isWhite, int depth);
+    std::string makeMove(std::unique_ptr<Board>& board, const std::string &from, const std::string &to, const std::string &promotion) override;
+    std::string level1(std::unique_ptr<Board>& board, bool isWhite);
+    std::string level2(std::unique_ptr<Board>& board, bool isWhite);
+    std::string level3(std::unique_ptr<Board>& board, bool isWhite);
+    std::string level4(std::unique_ptr<Board>& board, bool isWhite, int depth);
 
 };
 

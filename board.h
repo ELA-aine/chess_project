@@ -54,13 +54,21 @@ class Board {
 
     // for player implementation
     map<string, char> pieceCoords(bool isWhite) const; // returns the coordinates of pieces left on board 
-    map<string, int> possibleMoves(string coord) const; // returns possible moves for piece
+    map<string, int> possibleMoves(string coord, bool isWhite) const; // returns possible moves for piece
     // <coord, type (capture)>
     // maybe
     // checkmate -> 4
     // check -> 3
     // capture -> 2
     // normal -> 1
+    map<string, int> getPawnMoves(string coord, bool isWhite);
+    map<string, int> getKinghtMoves(string coord, bool isWhite);
+    map<string, int> getBishopMoves(string coord, bool isWhite);
+    map<string, int> getRookMoves(string coord, bool isWhite);
+    map<string, int> getQueenMoves(string coord, bool isWhite);
+    map<string, int> getKingMoves(string coord, bool isWhite);
+
+
     map<map<string, char>, map<string, int>> allMoves(bool isWhite) const; // finds all possible moves and classifies
     map<string, string> tempMoveHistory;
     void makeAMove(string);

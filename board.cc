@@ -222,9 +222,9 @@ bool Board::isStalemate(bool white) const {
 }
 
  // meaning no legals moves but is not in check.
-    //void setup();  // Sets up the board for a new game or custom setup
+  //void setup();  // Sets up the board for a new game or custom setup
 
-    void Board::display() {
+void Board::display() {
       for (int row = 0; row < 8; ++row) {
         int curRow = 8 - row;  // Calculate the current row number in descending order
         cout << curRow << " ";  // Print the current row number
@@ -239,6 +239,103 @@ bool Board::isStalemate(bool white) const {
     }
 
     cout << "  abcdefgh" << endl;
+}
+
+
+// for player implementations:
+map<string, char> Board::pieceCoords(bool isWhite) const {
+  // returns the coordinates of pieces left on board
+    map<string, char> pieceMap;
+    
+    // Iterate through each row of the board
+    for (size_t row = 0; row < board->size(); ++row) {
+        // Iterate through each column of the row
+        for (size_t col = 0; col < (*board)[row].size(); ++col) {
+            const auto& piece = (*board)[row][col];
+            if (piece && piece->isWhite() == isWhite) {
+                string rows = to_string(row);
+                string cols = to_string(col);
+                string coord = rows + cols;
+                pieceMap[coord] = piece->getSymbol();
+            }
+        }
+    }
+    
+    return pieceMap;
+}
+
+int Board::moveValue(string coord, bool isWhite) {
+
+}
+
+
+map<string, int> Board::getPawnMoves(string coord, bool isWhite) {
+  int direction = isWhite ? -1 : 1;
+  int startX = coord[0] - 'a'; // index X
+  int startY = coord[1] - '1'; // index Y
+  
+  string toCoord;
+  // move : direction * 2 -> is valid
+  // d * 1 -> is valid
+  // d * diag -> is valid
+
+  
+
+  char moveX = 'a' +  startX;
+  string moveY = to_string((direction * 2) + startY);
+
+  string toCoord = moveX + moveY;
+
+}
+
+map<string, int> Board::getKinghtMoves(string coord, bool isWhite) {
+
+}
+
+map<string, int> Board::getBishopMoves(string coord, bool isWhite) {
+
+
+}
+
+map<string, int> Board::getRookMoves(string coord, bool isWhite) {
+
+}
+
+map<string, int> Board::getQueenMoves(string coord, bool isWhite) {
+
+}
+
+map<string, int> Board::getKingMoves(string coord, bool isWhite) {
+
+}
+
+map<string, int> Board::possibleMoves(string coord, bool isWhite) const {
+  // returns possible moves for piece
+  // <coord, type (capture)>
+  // maybe
+  // checkmate -> 4
+  // check -> 3
+  // capture -> 2
+  // normal -> 1
+
+  map<string, int> possibleMoves;
+  // virtual Piece *getPiece(const string &coord)
+  Piece *piece = getPiece(coord);
+  char symbol = piece->getSymbol();
+  if (symbol == 'p' || symbol == 'P') {
+    // pawn
+    map<string, int> pawnMove = getPawnMoves(coord, isWhite);
+
+  } else if (symbol == 'n' || symbol == 'N') {
+
+  } else if (symbol == 'b' || symbol == 'B') {
+    
+  } else if (symbol == 'r' || symbol == 'R') {
+    
+  } else if (symbol == 'q' || symbol == 'Q') {
+    
+  } else if (symbol == 'k' || symbol == 'K') {
+    
   }
 
 
@@ -248,24 +345,10 @@ bool Board::isStalemate(bool white) const {
 
 
 
-// for player implementations:
-map<string, char> Board::pieceCoords(bool isWhite) const {
-  // returns the coordinates of pieces left on board
-
 } 
 
 
-vector<map<string, int>> Board::possibleMoves(string coord) const {
-  // returns possible moves for piece
-  // <coord, type (capture)>
-  // maybe
-  // checkmate -> 4
-  // check -> 3
-  // capture -> 2
-  // normal -> 1
-
-} 
-map<map<string, char>, vector<map<string, int>>> Board::allMoves(bool isWhite) {
+map<map<string, char>, map<string, int>> Board::allMoves(bool isWhite) const {
   // finds all possible moves and classifies
 
   

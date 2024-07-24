@@ -10,7 +10,7 @@ using namespace std;
 
 ComputerPlayer::ComputerPlayer(int level, bool isWhite) : level{level}, isWhite{isWhite}, Player{isWhite} {}
 
-string ComputerPlayer::level1(Board *board, bool isWhite) {
+string ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
     // random moves
     map<string, char> piecesLeft = (*board).pieceCoords(isWhite);
 
@@ -58,7 +58,7 @@ string ComputerPlayer::level1(Board *board, bool isWhite) {
 
 
 
-string ComputerPlayer::level2(Board *board, bool isWhite) {
+string ComputerPlayer::level2(std::unique_ptr<Board>& board, bool isWhite) {
     // prefers capturing moves and checks over other moves
 
     // map<map<string, char>, vector<map<string, int>>> allMovesOpp(bool isWhite);
@@ -112,7 +112,7 @@ string ComputerPlayer::level2(Board *board, bool isWhite) {
 
 }
 
-string ComputerPlayer::level3(Board *board, bool isWhite) {
+string ComputerPlayer::level3(std::unique_ptr<Board>& board, bool isWhite) {
     // prefers avoiding capture, capturing moves, and checks
     
     // same from level2, make helper later
@@ -199,7 +199,7 @@ string ComputerPlayer::level3(Board *board, bool isWhite) {
 
 }
 
-int evaluateBoard(Board *board, bool isWhite) {
+int evaluateBoard(std::unique_ptr<Board>& board, bool isWhite) {
     if ((*board).isInCheckmate(isWhite)) {
         return isWhite ? -9999 : 9999;
         // replace with <limits> int min max
@@ -236,7 +236,7 @@ int evaluateBoard(Board *board, bool isWhite) {
     return evaluated;
 }
 
-int miniMax(Board *board, int depth, int alpha, int beta, bool isMaxPlayer, bool isWhite) {
+int miniMax(std::unique_ptr<Board>& board, int depth, int alpha, int beta, bool isMaxPlayer, bool isWhite) {
     if (depth == 0 || (*board).isStalemate() 
         || (*board).isInCheckmate(isWhite) || (*board).isInCheckmate(!isWhite)) {
         return evaluateBoard(board, isWhite);
@@ -290,7 +290,7 @@ int miniMax(Board *board, int depth, int alpha, int beta, bool isMaxPlayer, bool
 
 }
 
-string ComputerPlayer::level4(Board *board, bool isWhite, int depth) {
+string ComputerPlayer::level4(std::unique_ptr<Board>& board, bool isWhite, int depth) {
     // use alpha beta algorithm
 
     //map<map<string, char>, map<string, int>> allMoves(bool isWhite);
@@ -331,7 +331,7 @@ string ComputerPlayer::level4(Board *board, bool isWhite, int depth) {
 }
 
 
-string ComputerPlayer::makeMove(Board *board, const string &from, const string &to, const string &promotion) {
+string ComputerPlayer::makeMove(std::unique_ptr<Board>& board, const string &from, const string &to, const string &promotion) {
     switch(level) {
         case 1:
             return level1(board, isWhite);
