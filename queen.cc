@@ -1,4 +1,4 @@
-#include "Queen.h"
+#include "queen.h"
 
 
 // Constructor: Initializes Queen with color
