@@ -111,7 +111,7 @@ const int COL = 8;
       (*board)[row][col] = nullptr;
     }
     // remove PIECE at current COORD:
-Piece* Board::getPiece(const string &coord) {
+Piece* Board::getPiece(const string &coord) const{
     // Extract the row and column from the coordinate string
     int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
     int row = 8 - stoi(coord.substr(1));  // Convert '1'-'8' to 7-0 (assuming bottom-left is (0,0))

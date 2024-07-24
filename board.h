@@ -37,7 +37,7 @@ class Board {
     //              special piece can only appear once in the board
     virtual void removeCoord(string coord);
     // remove PIECE at current COORD:
-    virtual Piece *getPiece(const string &coord);
+    virtual Piece *getPiece(const string &coord) const;
     // return PIECE at COORD in BOARD
     void undoLastMove();  // Undoes the last move made on the board
     bool isInCheck(bool white) const;  // Checks if the given color (white) is in check
