@@ -18,7 +18,7 @@ class Player{
 
   public:
     Player(bool isWhite) :isWhite(isWhite){} // true = white, false = black 
-    virtual std::string makeMove(Board *board, const std::string &from, const std::string &to, const std::string &promotion) = 0;
+    virtual std::string makeMove(std::unique_ptr<Board>& board, const std::string &from, const std::string &to, const std::string &promotion) = 0;
     // determine if player can move or not
     // some other function
     virtual ~Player();

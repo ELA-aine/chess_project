@@ -2,7 +2,7 @@
 #define ROOK_H
 
 
-#include "Piece.h"
+#include "piece.h"
 #include <memory>
 #include <string>
 

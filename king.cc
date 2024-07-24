@@ -1,5 +1,4 @@
 #include "king.h"
-#include "board.h"
 #include "rook.h"
 #include <cmath>
 

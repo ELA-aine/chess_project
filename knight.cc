@@ -1,5 +1,4 @@
-#include "Knight.h"
-#include "Board.h"
+#include "knight.h"
 
 // Constructor: Initializes Knight with color and symbol
 Knight::Knight(bool isWhite, char symbol) : Piece(isWhite, symbol) {}
