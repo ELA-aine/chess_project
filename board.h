@@ -23,7 +23,7 @@ class Board {
   protected:
     unique_ptr<vector<vector<unique_ptr<Piece>>>> board;
     //<vector<vector<Piece>>> *board;         // creating a 8 * 8 board
-    vector<Move> moveHistory;
+    vector<unique_ptr<Move>> moveHistory;
 
   public:
     Board();      // constructing a board;
@@ -48,6 +48,7 @@ class Board {
 
     // additional
     void findPiece(char piece);
+    void addMove(string from, string to, string piece, string promotion = "", string capture = "");
 
 
 
