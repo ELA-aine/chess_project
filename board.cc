@@ -125,11 +125,33 @@ Piece* Board::getPiece(const string &coord) const{
 
     }
     bool Board::isInCheck(bool white) const {
-      if (white) {
+      std::string kingPosition;
+      // this should be used in makeMove and isInCheck in game.h
+      // check if the given white is in check
+      // so parse through every piece on the board, and first find the numerical position of the king of bool. position should be in string format because the parameter of isValidMove function is string. 
+      for (int x = 0; x < 8; ++x) {
+        for (int y = 0; y < 8; ++y){
+          std::string currentCoord = std::string(1, 'a' + x) + std::to_string(y + 1); // this line produce alphabetical coordinates like 'e2', a5', 'f5'
+          Piece *piece = getPiece(currentCoord);
+          if(piece && piece ->getSymbol() == (white ? 'K' : 'k')) {
+            string kingPosition = currentCoord;
+          }
+        }
+      } // parsing through every possible coordinate
 
-      }
-
+      // once we have the position of the king, we could use isValidMove to all possible attacking moves, whether these would threaten the king
+      for (int x = 0; x < 8; ++x) {
+        for (int y = 0; y < 8; ++y){
+        std::string coord = std::string(1, 'a' + x) + std::to_string(y + 1);
+         Piece *piece = getPiece(coord);
+            if (piece && piece->isWhite() != white) {
+                if (piece->isValidMove(coord, kingPosition, std::make_unique<Board>(*this))) {
+                    return true; // The king is in check
+                }
+            }
+        }
     }
+} 
     bool Board::isInCheckmate(bool white) const {
       
     }
