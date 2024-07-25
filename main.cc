@@ -118,11 +118,9 @@ int main() {
                 blackPlayer = std::make_unique<ComputerPlayer> (false, level); // i think through it and agree with patricia, using boolean to represent whether it is black or white is easier when constructing a player. i use false for black and true for white. we could discuss further. 
             }
 
-            game.start(whitePlayer, blackPlayer); // I am assuming this will create a copy of the players so i delete the players next line.
+            game.start(std::move(whitePlayer), std::move(blackPlayer)); // I am assuming this will create a copy of the players so i delete the players next line.
 
             // Clean up dynamically allocated memory
-            delete whitePlayer;
-            delete blackPlayer;
 
         } else if (command == "move") {
             std::string from, to, promotion;
