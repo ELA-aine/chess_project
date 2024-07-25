@@ -133,13 +133,13 @@ void Board::undoLastMove() {
 
 
     bool Board::isInCheck(bool white) const {
-      std::string kingPosition;
+      string kingPosition;
       // this should be used in makeMove and isInCheck in game.h
       // check if the given white is in check
       // so parse through every piece on the board, and first find the numerical position of the king of bool. position should be in string format because the parameter of isValidMove function is string. 
       for (int x = 0; x < 8; ++x) {
         for (int y = 0; y < 8; ++y){
-          std::string currentCoord = std::string(1, 'a' + x) + std::to_string(y + 1); // this line produce alphabetical coordinates like 'e2', a5', 'f5'
+          string currentCoord = string(1, 'a' + x) + to_string(y + 1); // this line produce alphabetical coordinates like 'e2', a5', 'f5'
           Piece *piece = getPiece(currentCoord);
           if(piece && piece ->getSymbol() == (white ? 'K' : 'k')) {
             string kingPosition = currentCoord;
@@ -150,18 +150,17 @@ void Board::undoLastMove() {
       // once we have the position of the king, we could use isValidMove to all possible attacking moves, whether these would threaten the king
       for (int x = 0; x < 8; ++x) {
         for (int y = 0; y < 8; ++y){
-        std::string coord = std::string(1, 'a' + x) + std::to_string(y + 1);
+        string coord = string(1, 'a' + x) + to_string(y + 1);
          Piece *piece = getPiece(coord);
             if (piece && piece->isWhite() != white) {
-                if (piece->isValidMove(coord, kingPosition, std::make_unique<Board>(*this))) {
+                if (piece->isValidMove(coord, kingPosition, make_unique<Board>(*this))) {
                     return true; // The king is in check
                 }
             }
         }
     }
 } 
-    bool Board::isInCheckmate(bool white) const { // meaning no moves for king
-
+bool Board::isInCheckmate(bool white) const { // meaning no moves for king
         if (!isInCheck(white)) {
         // If the King is not in check, it cannot be in checkmate
         return false;
@@ -244,63 +243,235 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
     
     // Iterate through each row of the board
     for (size_t row = 0; row < board->size(); ++row) {
-        // Iterate through each column of the row
-        for (size_t col = 0; col < (*board)[row].size(); ++col) {
-            const auto& piece = (*board)[row][col];
-            if (piece && piece->isWhite() == isWhite) {
-                string rows = to_string(row);
-                string cols = to_string(col);
-                string coord = rows + cols;
-                pieceMap[coord] = piece->getSymbol();
-            }
+      // Iterate through each column of the row
+      for (size_t col = 0; col < (*board)[row].size(); ++col) {
+        const auto& piece = (*board)[row][col];
+        if (piece && piece->isWhite() == isWhite) {
+          string rows = to_string(row);
+          string cols = to_string(col);
+          string coord = rows + cols;
+          pieceMap[coord] = piece->getSymbol();
         }
+      }
     }
     
     return pieceMap;
 }
 
-int Board::moveValue(string coord, bool isWhite) {
-
+int Board::moveValue(string fromCoord, string toCoord, bool isWhite) const {
+  Piece* fromPiece = getPiece(fromCoord);
+  Piece* toPiece = getPiece(toCoord);
+  if (isCheckmate(!isWhite)) {
+    return 4; // checkmate
+  }
+  if (isCheck(!isWhite)) {
+    return 3; // check
+  }
+  if (toPiece && toPiece->isWhite() != isWhite) {
+    return 2; // capture
+  }
+  return 1; // Normal move
 }
 
 
-map<string, int> Board::getPawnMoves(string coord, bool isWhite) {
+map<string, int> Board::getPawnMoves(string coord, bool isWhite) const {
   int direction = isWhite ? -1 : 1;
   int startX = coord[0] - 'a'; // index X
   int startY = coord[1] - '1'; // index Y
-  
+  Piece *piece = getPiece(coord);
+  map<string, int> moves;
+
+  const int numMoves = 4;
+  // 2 forward
+  // 1 forward
+  // diagonal right
+  // diagonal left
+  char moveX;
+  string moveY;
   string toCoord;
-  // move : direction * 2 -> is valid
-  // d * 1 -> is valid
-  // d * diag -> is valid
 
-  
+  // forward 2 spots
+  moveX = 'a' +  startX;
+  moveY = to_string((direction * 2) + startY);
+  toCoord = moveX + moveY;
 
-  char moveX = 'a' +  startX;
-  string moveY = to_string((direction * 2) + startY);
+  // isValidMove(from, to, board)
+  if (piece->isValidMove(coord, toCoord, *this)) {
+    moves[toCoord] = moveValue(coord, toCoord, isWhite);
+  }
 
-  string toCoord = moveX + moveY;
+  // move 1 forward
+  moveX = 'a' +  startX;
+  moveY = to_string(direction + startY);
+  toCoord = moveX + moveY;
+
+  if (piece->isValidMove(coord, toCoord, *this)) {
+    moves[toCoord] = moveValue(coord, toCoord, isWhite);
+  }
+
+  // right diagonal
+  moveX = 'a' + 1 + startX;
+  moveY = to_string(direction + startY);
+  if (piece->isValidMove(coord, toCoord, *this)) {
+    moves[toCoord] = moveValue(coord, toCoord, isWhite);
+  }
+
+  // left diagonal
+  moveX = 'a' - 1 + startX;
+  moveY = to_string(direction + startY);
+  if (piece->isValidMove(coord, toCoord, *this)) {
+    moves[toCoord] = moveValue(coord, toCoord, isWhite);
+  }
+
+  return moves;
 
 }
 
-map<string, int> Board::getKinghtMoves(string coord, bool isWhite) {
+map<string, int> Board::getKnightMoves(string coord, bool isWhite) const {
+  int startX = coord[0] - 'a'; // index X
+  int startY = coord[1] - '1'; // index Y
+  Piece *piece = getPiece(coord);
+  map<string, int> moves;
+
+  char moveX;
+  string moveY;
+  string toCoord;
+
+  const vector<pair<int, int>> moveOffsets = {
+    {-2, -1}, {-1, -2}, {1, -2}, {2, -1},
+    {-2,  1}, {-1,  2}, {1,  2}, {2,  1}
+  };
+
+  for (const auto& [dx, dy] : moveOffsets) {
+    int moveX = startX + dx;
+    int moveY = startY + dy;
+
+    if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
+      string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
+      if (piece->isValidMove(coord, toCoord, board)) {
+        moves[toCoord] = moveValue(coord, toCoord, isWhite);
+      }
+    }
+  }
+
+  return moves;
+}
+
+map<string, int> Board::getBishopMoves(string coord, bool isWhite) const {
+  map<string, int> moves;
+  int startX = coord[0] - 'a';
+  int startY = coord[1] - '1';
+
+  const vector<pair<int, int>> moveOffsets = {
+      {-1, -1}, {1, -1}, {-1, 1}, {1, 1}
+  };
+
+  for (const auto& [dx, dy] : moveOffsets) {
+      for (int i = 1; i < 8; ++i) {
+          int moveX = startX + dx * i;
+          int moveY = startY + dy * i;
+
+          if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
+              string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
+              if (isValidMove(coord, toCoord, board)) {
+                  moves[toCoord] = moveValue(coord, toCoord, isWhite);
+                  if ((*board)[moveY][moveX]) break;
+              }
+          }
+      }
+  }
+
+  return moves;
+
 
 }
 
-map<string, int> Board::getBishopMoves(string coord, bool isWhite) {
+map<string, int> Board::getRookMoves(string coord, bool isWhite) const {
+  map<string, int> moves;
+  int startX = coord[0] - 'a';
+  int startY = coord[1] - '1';
 
+  const vector<pair<int, int>> moveOffsets = {
+      {0, -1}, {0, 1}, {-1, 0}, {1, 0}
+  };
 
+  for (const auto& [dx, dy] : moveOffsets) {
+      for (int i = 1; i < 8; ++i) {
+          int moveX = startX + dx * i;
+          int moveY = startY + dy * i;
+
+          if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
+              string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
+              if (isValidMove(coord, toCoord, board)) {
+                  moves[toCoord] = moveValue(coord, toCoord, isWhite);
+                  if ((*board)[moveY][moveX]) break;
+              }
+          }
+      }
+  }
+
+  return moves;
 }
 
-map<string, int> Board::getRookMoves(string coord, bool isWhite) {
+map<string, int> Board::getQueenMoves(string coord, bool isWhite) const {
+  map<string, int> moves;
+  int startX = coord[0] - 'a';
+  int startY = coord[1] - '1';
 
+  const vector<pair<int, int>> moveOffsets = {
+      {-1, -1}, {0, -1}, {1, -1},
+      {-1,  0},         {1,  0},
+      {-1,  1}, {0,  1}, {1,  1},
+      {-1, -1}, {0,  0}, {1,  1},
+      { 0,  0}, {1, -1}, {0, -1},
+      {1,  0}, {1,  1}, {0,  1}
+  };
+
+  for (const auto& [dx, dy] : moveOffsets) {
+      for (int i = 1; i < 8; ++i) {
+          int moveX = startX + dx * i;
+          int moveY = startY + dy * i;
+
+          if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
+              string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
+              if (isValidMove(coord, toCoord, board)) {
+                  moves[toCoord] = moveValue(coord, toCoord, isWhite);
+                  // Stop if there is a piece blocking the way
+                  if ((*board)[moveY][moveX]) break;
+              }
+          }
+      }
+  }
+
+  return moves;
 }
 
-map<string, int> Board::getQueenMoves(string coord, bool isWhite) {
+map<string, int> Board::getKingMoves(string coord, bool isWhite) const {
+  int direction = isWhite ? -1 : 1;
+  int startX = coord[0] - 'a'; // index X
+  int startY = coord[1] - '1'; // index Y
+  Piece *piece = getPiece(coord);
+  map<string, int> moves;
 
-}
+  const vector<pair<int, int>> moveOffsets = {
+    {-1, -1}, {0, -1}, {1, -1},
+    {-1,  0},         {1,  0},
+    {-1,  1}, {0,  1}, {1,  1}
+  };
 
-map<string, int> Board::getKingMoves(string coord, bool isWhite) {
+  for (const auto& [dx, dy] : moveOffsets) {
+    int moveX = startX + dx;
+    int moveY = startY + dy;
+
+    if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
+        string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
+        if (piece->isValidMove(coord, toCoord, board)) {
+            moves[toCoord] = moveValue(coord, toCoord, isWhite)/=
+        }
+    }
+  }
+
+  return moves;
 
 }
 
@@ -316,36 +487,56 @@ map<string, int> Board::possibleMoves(string coord, bool isWhite) const {
   map<string, int> possibleMoves;
   // virtual Piece *getPiece(const string &coord)
   Piece *piece = getPiece(coord);
+
+  if (!piece) {
+    return possibleMoves;
+  }
+
   char symbol = piece->getSymbol();
   if (symbol == 'p' || symbol == 'P') {
     // pawn
-    map<string, int> pawnMove = getPawnMoves(coord, isWhite);
-
+    possibleMoves = getPawnMoves(coord, isWhite);
   } else if (symbol == 'n' || symbol == 'N') {
-
+    possibleMoves = getKnightMoves(coord, isWhite);
   } else if (symbol == 'b' || symbol == 'B') {
-    
+    possibleMoves = getBishopMoves(coord, isWhite);
   } else if (symbol == 'r' || symbol == 'R') {
-    
+    possibleMoves = getRookMoves(coord, isWhite);
   } else if (symbol == 'q' || symbol == 'Q') {
-    
+    possibleMoves = getQueenMoves(coord, isWhite);
   } else if (symbol == 'k' || symbol == 'K') {
-    
+    possibleMoves = getKingMoves(coord, isWhite);
   }
 
-
-
-
-
-
-
-
+  return possibleMoves;
 } 
 
 
-map<map<string, char>, map<string, int>> Board::allMoves(bool isWhite) const {
+map<string, map<string, int>> Board::allMoves(bool isWhite) const {
   // finds all possible moves and classifies
+  // map<string, char> pieceCoords(bool isWhite)
+  map<string, char> pieces = pieceCoords(isWhite);
+  map<string, int> pieceMoves;
+  map<string, map<string, int>> allMoves;
+  string toCoord;
+  // auto &it = pieces.begin();
+  for (const auto &it : pieces) {
+    toCoord = it.first;
+    pieceMoves = possibleMoves(toCoord, isWhite);
+    allMoves[toCoord] = pieceMoves;
+  }
 
-  
+  return allMoves;
 } // finds all possible moves and classifies
 
+
+// map<string, string> tempMoveHistory;
+void makeAMove(string from, string to, string promotion) {
+
+}
+
+
+void undoMove(string from, string to, string promotion) {
+
+
+}

@@ -32,13 +32,15 @@ std::string HumanPlayer::makeMove(std::unique_ptr<Board>& board, const std::stri
             }
 
         }
-        // check isCheck and isCheckMate,
+        // check isCheck and isCheckMate
     } else {
         canMove = false;
     }
 
     if (canMove) {
         return to + from + promotion + isCheck;
+
+        
     } else {
         return "invalid move";
     }

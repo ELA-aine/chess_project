@@ -49,8 +49,11 @@ class Board {
     // additional
     void findPiece(char piece);
     void addMove(string from, string to, string piece, string promotion = "", string capture = "");
-
-
+    
+    
+    map<string, string> tempMoveHistory;
+    void makeAMove(string, string, string);
+    void undoMove(string, string, string);
 
     // for player implementation
     map<string, char> pieceCoords(bool isWhite) const; // returns the coordinates of pieces left on board 
@@ -61,18 +64,17 @@ class Board {
     // check -> 3
     // capture -> 2
     // normal -> 1
-    map<string, int> getPawnMoves(string coord, bool isWhite);
-    map<string, int> getKinghtMoves(string coord, bool isWhite);
-    map<string, int> getBishopMoves(string coord, bool isWhite);
-    map<string, int> getRookMoves(string coord, bool isWhite);
-    map<string, int> getQueenMoves(string coord, bool isWhite);
-    map<string, int> getKingMoves(string coord, bool isWhite);
+    int moveValue(string fromCoord, string toCoord, bool isWhite)const ;
+    map<string, int> getPawnMoves(string coord, bool isWhite) const;
+    map<string, int> getKnightMoves(string coord, bool isWhite) const;
+    map<string, int> getBishopMoves(string coord, bool isWhite) const;
+    map<string, int> getRookMoves(string coord, bool isWhite) const;
+    map<string, int> getQueenMoves(string coord, bool isWhite) const;
+    map<string, int> getKingMoves(string coord, bool isWhite) const;
 
 
-    map<map<string, char>, map<string, int>> allMoves(bool isWhite) const; // finds all possible moves and classifies
-    map<string, string> tempMoveHistory;
-    void makeAMove(string);
-    void undoMove(string);
+    map<string, map<string, int>> allMoves(bool isWhite) const; // finds all possible moves and classifies
+
 
 };
 
