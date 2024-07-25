@@ -6,6 +6,10 @@
 #include <iostream>
 #include "move.h"
 #include <memory>
+#include "piece.h"
+#include "pawn.h"
+#include "knight.h"
+#include "queen.h"
 
 class Piece;  // Forward declaration
 
