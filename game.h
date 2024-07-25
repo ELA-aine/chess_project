@@ -1,14 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
-#include "player.h"
-#include "board.h"
-#include "piece.h"
 #include <map>
 #include <string>
 #include <memory>
 
 //new include
 #include <utility>
+
+
+class Player;  // Forward declaration
+class Board;   // Forward declaration
 
 using namespace std;
 
