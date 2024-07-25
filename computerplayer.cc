@@ -320,7 +320,7 @@ bool ComputerPlayer::makeMove(std::unique_ptr<Board>& board, const std::string &
             return level3(board, isWhite);
             break;
         case 4:
-            int depth = 4; // CHANGE
+            int depth = 4; 
             return level4(board, isWhite, depth);
             break;
     }
