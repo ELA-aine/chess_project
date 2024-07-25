@@ -13,7 +13,7 @@ class Board;
 class King : public Piece {
 public:
    // Constructor: Initializes King with color
-   King(bool isWhite, char symbol = 'K');
+   King(bool isWhite, char symbol);
 
 
    // Overrides to check if the move is valid for a King
@@ -28,7 +28,7 @@ public:
    bool canCastle(const std::string &from, const std::string &to, const std::unique_ptr<Board> &board) const;
 
 
-       bool hasMoved() const; // Checks if the Rook has moved
+   bool hasMoved() const; // Checks if the Rook has moved
    void setMoved(bool moved); // Sets the moved status of the Rook
 
 

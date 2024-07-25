@@ -109,7 +109,7 @@ int main() {
                 int level = stringToInt(whitePlayerType.substr(8)); // then we could check the last number and convert it to interger
                 whitePlayer = new ComputerPlayer(true, level);
             }
-
+            
             if (blackPlayerType == "human") {
                 blackPlayer = new HumanPlayer(false);
             } else if (blackPlayerType.rfind("computer", 0) == 0) {
