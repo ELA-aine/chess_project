@@ -701,3 +701,7 @@ bool Board::isPathClear(const string &from, const string &to) const {     //Bish
     return true;
 }
 
+bool Board::canPromote(const std::string &to) {
+    int row = 8 - (to[1] - '0');
+    return row == 7 || row == 0;
+}
