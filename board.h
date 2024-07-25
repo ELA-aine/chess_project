@@ -48,6 +48,7 @@ class Board {
     // additional
     //void findPiece(char piece);
     void addMove(string from, string to, string piece, string promotion = "", string capture = "");
+    bool canPromote(const std::string &to);
     
     
     map<string, string> tempMoveHistory;
