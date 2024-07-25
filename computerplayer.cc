@@ -10,7 +10,7 @@ using namespace std;
 
 ComputerPlayer::ComputerPlayer(int level, bool isWhite) : level{level}, isWhite{isWhite}, Player{isWhite} {}
 
-string ComputerPlayer::level1(Board *board, bool isWhite) {
+bool ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
     // random moves
     map<string, char> piecesLeft = (*board).pieceCoords(isWhite);
 
@@ -19,31 +19,22 @@ string ComputerPlayer::level1(Board *board, bool isWhite) {
     advance(it, rand() % piecesLeft.size());
     // take random from piecesLeft
 
-    // int index = (rand() % piecesLeft.size());
-    // map<string, char> from = piecesLeft[index];
 
     string fromCoord = it->first; 
     Piece* piece = (*board).getPiece(fromCoord);
 
 
-    map<string, int> possibleMoves = (*board).possibleMoves(fromCoord);
+    map<string, int> possibleMoves = (*board).possibleMoves(fromCoord, isWhite);
     auto jt = possibleMoves.begin();
     advance(jt, rand() % possibleMoves.size());
-    // take random move
-    // map<string, int> move = possibleMoves[index];
+
     string toCoord = jt->first;
 
-    /*
-    // string index = (rand() % possibleMoves.size())->first;
-    // find to coord
-    // auto jt = move.begin();
-    // advance(it, rand() %  move.size());
-    */
 
     string promotion = "";
 
     // must meet promotion standards
-    if ((piece->getSymbol() == 'P' || piece->getSymbol() == 'p') && piece->canPromote(fromCoord)) {
+    if ((piece->getSymbol() == 'P' || piece->getSymbol() == 'p') && (*board).canPromote(toCoord)) {
         // random promotion
         string promotionPossibilities[5] = {"queen", "rook", "knight", "bishop", ""};
         // possible pieces to be promoted to
@@ -51,159 +42,114 @@ string ComputerPlayer::level1(Board *board, bool isWhite) {
         promotion = promotionPossibilities[index];
     }
 
-    return fromCoord + toCoord + promotion;
+    // void changeBoard(const string &from, const string &to, char piece);
+    (*board).changeBoard(fromCoord, toCoord, piece->getSymbol());
+    return true;
+    // (*board).getPiece(fromCoord)
 
 }
 
 
 
 
-string ComputerPlayer::level2(Board *board, bool isWhite) {
+bool ComputerPlayer::level2(std::unique_ptr<Board>& board, bool isWhite) {
     // prefers capturing moves and checks over other moves
 
-    // map<map<string, char>, vector<map<string, int>>> allMovesOpp(bool isWhite);
+    // map<string, map<string, int>> allMoves(bool isWhite) const; // finds all possible moves and classifies
+    Board* temp = dynamic_cast<Board*>(board.get());
 
-    map<map<string, char>, vector<map<string, int>>> allMoves = (*board).allMoves(isWhite);
-
-    map<int, vector<map<string, string>>> priorityMoves;
-    vector<map<string, string>> value2;
-    vector<map<string, string>> value3;
-    vector<map<string, string>> value4;
+    map<string, map<string, int>> allMoves = temp->allMoves(isWhite);
+    string from, to;
+    map<string, string> moves;
+    
 
     for (auto& pieceMoves : allMoves) {
         // pieceMoves.first : map<string, char>
         // pieceMoves.second : vector<map<string, int>>
-        map<string, char> from = pieceMoves.first;
-        string piecePosition = from.first; // fix later
+        from = pieceMoves.first;
 
-        vector<map<string, int>>& toCoords = pieceMoves.second;
+        map<string, int>& toCoords = pieceMoves.second;
 
-        for (auto& fromCoord : toCoords) { // map<string, int>
-
-            for (auto& coord : fromCoord) { 
-                // coord.first : from coordinate
-                // coord.second : value of move
-
-                map<string, string> move;
-                move[piecePosition] = coord.first;
-
-                if (coord.second == 2) { // capture or better 
-                    value2.emplace_back(move);
-                } else if (coord.second == 3) {
-                    value3.emplace_back(move);
-                } else if (coord.second == 4) {
-                    value4.emplace_back(move);
-                }
-
-            }
+        for (auto & coord : toCoords) {
+            to = coord.first;
+            if (coord.second > 1) {
+                moves[from] = to;
+            } 
         }
+
+        
     }
 
-    priorityMoves[2] = value2;
-    priorityMoves[3] = value3;
-    priorityMoves[4] = value4;
+    auto it = moves.begin();
+    advance(it, rand() % moves.size());
+    string fromCoord = it->first;
+    string toCoord = it->second;
 
-    string to;
-    string from;
-    string promotion;
-    // find max, if 4, take random 4, ...
-
-    return to + from + promotion;
+    Piece *piece = (*temp).getPiece(fromCoord);
+    
+    (*board).changeBoard(fromCoord, toCoord, piece->getSymbol());
+    return true;
 
 }
 
-string ComputerPlayer::level3(Board *board, bool isWhite) {
+bool ComputerPlayer::level3(std::unique_ptr<Board>& board, bool isWhite) {
     // prefers avoiding capture, capturing moves, and checks
-    
-    // same from level2, make helper later
-    // take all opponent moves
-    map<map<string, char>, vector<map<string, int>>> allMovesOpp = (*board).allMoves(isWhite);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    map<int, vector<map<map<string, string>, char>>> priorityMoves;
-    // <move value, <to, from>>
-    vector<map<map<string, string>, char>> value2;
-    vector<map<map<string, string>, char>> value3;
-    vector<map<map<string, string>, char>> value4;
 
-    // get capture and above moves
+    Board* temp = dynamic_cast<Board*>(board.get());
+    map<string, map<string, int>> allMovesOpp = temp->allMoves(!isWhite);
+    string from, to;
+    map<string, string> movesOpp;
+    
     for (auto& pieceMoves : allMovesOpp) {
         // pieceMoves.first : map<string, char>
         // pieceMoves.second : vector<map<string, int>>
-        map<string, char> from = pieceMoves.first;
-        string piecePosition = from.first; // fix later
-        char pieceType = from.second;
+        from = pieceMoves.first;
 
-        vector<map<string, int>>& toCoords = pieceMoves.second;
+        map<string, int>& toCoords = pieceMoves.second;
 
-        for (auto& fromCoord : toCoords) { // map<string, int>
+        for (auto & coord : toCoords) {
+            to = coord.first;
+            if (coord.second > 1) {
+                movesOpp[from] = to;
+            } 
+        }
 
-            for (auto& coord : fromCoord) { 
-                // coord.first : from coordinate
-                // coord.second : value of move
-
-                map<string, string> move;
-                move[piecePosition] = coord.first;
-                map<map<string, string>, char> pieceMove;
-                pieceMove[move] = pieceType;
-                
-                if (coord.second == 2) { // capture or better 
-                    value2.emplace_back(pieceMove);
-                } else if (coord.second == 3) {
-                    value3.emplace_back(pieceMove);
-                } else if (coord.second == 4) {
-                    value4.emplace_back(pieceMove);
-                }
-
+        
+    }
+    // movesOpp has all capture moves from opp <from, to>
+    // map<from, to>
+    // map<string, int> possibleMoves(string coord, bool isWhite) const;
+    map<string, string> avoidCapture;
+    map<string, int> avoidMove;
+    string couldCapture, to;
+    for (auto& pieceMoves : movesOpp) {
+        couldCapture = pieceMoves.second;
+        avoidMove = temp->possibleMoves(couldCapture, isWhite);
+        for (auto &move : avoidMove) {
+            if (move.second > 1){
+                avoidCapture[couldCapture] = move.first;
             }
         }
     }
 
-    priorityMoves[2] = value2;
-    priorityMoves[3] = value3;
-    priorityMoves[4] = value4;
+    auto it = avoidCapture.begin();
+    advance(it, rand() % avoidCapture.size());
+    string fromCoord = it->first;
+    string toCoord = it->second;
 
-    // map<int, vector<map<string, string>>> priorityMoves;
+    Piece *piece = (*temp).getPiece(fromCoord);
 
-    vector<map<string, string>> captureAvoid;
-
-    int i = 0, j = 0, k = 0;
-
-    for (i = 4; i > 1; i--) {
-        vector<map<map<string, string>, char>> moves = priorityMoves[i];
-
-        for (j = 0; j < moves.size(); i++) {
-            // map<string, int> possibleMoves(string coord, Piece *piece);
-            map<map<string, string>, char> coordPiece = moves[j];
-            map<string, string> coord = coordPiece.first;
-            char pieceType = coordPiece.second;
-            string thisFrom = coord.second; // fix later
-            vector<map<string, int>> captureAndAvoid = (*board).possibleMoves(thisFrom);
-
-            for (k = 0; k < captureAndAvoid.size(); k++) {
-                if (captureAndAvoid[k].second > 1) {
-                    map<string, string> possibleMove;
-                    possibleMove[thisFrom] = captureAndAvoid[k].first;
-
-                    captureAvoid.emplace_back(possibleMove);
-                }
-
-            }
-
-
-            
-        }
-    }
-
-    // find max, if 4, take random 4, ...
-    // captureAvoid
+    (*board).changeBoard(fromCoord, toCoord, piece->getSymbol());
+    return true;
 
 }
 
-int evaluateBoard(Board *board, bool isWhite) {
+int evaluateBoard(std::unique_ptr<Board>& board, bool isWhite) {
+
     if ((*board).isInCheckmate(isWhite)) {
         return isWhite ? -9999 : 9999;
         // replace with <limits> int min max
-    } else if ((*board).isStalemate()) {
+    } else if ((*board).isStalemate(isWhite)) {
         return 0;
     }
 
@@ -236,31 +182,46 @@ int evaluateBoard(Board *board, bool isWhite) {
     return evaluated;
 }
 
-int miniMax(Board *board, int depth, int alpha, int beta, bool isMaxPlayer, bool isWhite) {
-    if (depth == 0 || (*board).isStalemate() 
+int miniMax(std::unique_ptr<Board>& board, int depth, int alpha, int beta, bool isMaxPlayer, bool isWhite) {
+
+    Board* temp = dynamic_cast<Board*>(board.get());
+
+    if (depth == 0 || (*board).isStalemate(isWhite) 
         || (*board).isInCheckmate(isWhite) || (*board).isInCheckmate(!isWhite)) {
         return evaluateBoard(board, isWhite);
     }
 
-    map<map<string, char>, map<string, int>> allMovesWhite = (*board).allMoves(isWhite);
-    map<map<string, char>, map<string, int>> allMovesBlack = (*board).allMoves(!isWhite);
+    map<string, map<string, int>> allMovesWhite = temp->allMoves(isWhite);
+    map<string, map<string, int>> allMovesBlack = temp->allMoves(!isWhite);
 
     // combine into one map
-    map<map<string, char>, map<string, int>> allMoves;
+    map<string, map<string, int>> allMoves;
     allMoves.insert(allMovesWhite.begin(), allMovesWhite.end());
     allMoves.insert(allMovesBlack.begin(), allMovesBlack.end());
     //
 
+    // combine, all
     auto it = allMoves.begin();
+    string to, from;
+    vector<pair<string, string>> moves;
+
+    for (auto &move : allMoves) {
+        from = move.first;
+        map<string, int> toCoords = move.second;
+        for (auto &to : toCoords) {
+            pair<string, string> move = {from, to.first};
+            moves.emplace_back(move);
+        }
+        
+    }
 
     if (isMaxPlayer) {
         int maxEval = numeric_limits<int>::min();
-        for (it = allMoves.begin(); it != allMoves.end(); ++it) {
-            const string move = allMoves->first.first + allMoves->second.second;
+        for (auto &it : moves) {
             
-            (*board).makeAMove(move);
+            (*board).makeAMove(it.first, it.second, "", isWhite);
             int eval = miniMax(board, depth - 1, alpha, beta, false, isWhite);
-            (*board).undoMove(move);
+            (*board).undoMove(it.first, it.second, "", isWhite);
 
             maxEval = max(maxEval, eval);
             alpha = max(alpha, eval);
@@ -272,14 +233,12 @@ int miniMax(Board *board, int depth, int alpha, int beta, bool isMaxPlayer, bool
         return maxEval;
     } else {
         int minEval = numeric_limits<int>::max();
-        for (it = allMoves.begin(); it != allMoves.end(); ++it) {
-            const string move = allMoves->first.first + allMoves->second.second;
-            (*board).makeAMove(move);
+        for (auto &it : moves) {
+            (*board).makeAMove(it.first, it.second, "", isWhite);
             int eval = miniMax(board, depth - 1, alpha, beta, true, isWhite);
-            (*board).undoMove(move);
+            (*board).undoMove(it.first, it.second, "", isWhite);
             minEval = min(minEval, eval);
             beta = min(beta, eval);
-
 
             if (beta <= alpha) {
                 break;
@@ -290,48 +249,66 @@ int miniMax(Board *board, int depth, int alpha, int beta, bool isMaxPlayer, bool
 
 }
 
-string ComputerPlayer::level4(Board *board, bool isWhite, int depth) {
+bool ComputerPlayer::level4(std::unique_ptr<Board>& board, bool isWhite, int depth) {
     // use alpha beta algorithm
-
+    Board* temp = dynamic_cast<Board*>(board.get());
     //map<map<string, char>, map<string, int>> allMoves(bool isWhite);
     // <from, symbol>, <to, rank>
 
-    string bestMove;
+    string bestMoveTo, bestMoveFrom, promotion;
     int bestValue = numeric_limits<int>::min();
     int alpha = numeric_limits<int>::min();
     int beta = numeric_limits<int>::max();
 
     // get legal moves
-    map<map<string, char>, map<string, int>> allMovesWhite = (*board).allMoves(isWhite);
-    map<map<string, char>, map<string, int>> allMovesBlack = (*board).allMoves(!isWhite);
+    map<string, map<string, int>> allMovesWhite = temp->allMoves(isWhite);
+    map<string, map<string, int>> allMovesBlack = temp->allMoves(!isWhite);
 
     // combine into one map
-    map<map<string, char>, map<string, int>> allMoves;
+    map<string, map<string, int>> allMoves;
     allMoves.insert(allMovesWhite.begin(), allMovesWhite.end());
     allMoves.insert(allMovesBlack.begin(), allMovesBlack.end());
-    //
+
 
     auto it = allMoves.begin();
     int boardValue;
 
-    for (it = allMoves.begin(); it != allMoves.end(); ++it) {
-        const string move = allMoves->first.first + allMoves->second.second;
-        (*board).makeAMove(move);
+    string to, from;
+    vector<pair<string, string>> moves;
+
+    for (auto &move : allMoves) {
+        from = move.first;
+        map<string, int> toCoords = move.second;
+        for (auto &to : toCoords) {
+            pair<string, string> move = {from, to.first};
+            moves.emplace_back(move);
+        }
+        
+    }
+
+    for (auto &it : moves) {
+
+        (*board).makeAMove(it.first, it.second, "", isWhite);
         boardValue = miniMax(board, depth - 1, alpha, beta, false, isWhite);
-        (*board).undoMove(move);
+        (*board).undoMove(it.first, it.second, "", isWhite);
 
         if (boardValue > bestValue) {
             bestValue = boardValue;
-            bestMove = move;
+
+            bestMoveTo = it.second; 
+            bestMoveFrom = it.first; 
         }
     }
 
-    return bestMove;
+    Piece *piece = (*temp).getPiece(bestMoveFrom);
+    (*board).changeBoard(bestMoveFrom, bestMoveTo, piece->getSymbol());
+    return true;
+
 
 }
 
 
-string ComputerPlayer::makeMove(Board *board, const string &from, const string &to, const string &promotion) {
+bool ComputerPlayer::makeMove(std::unique_ptr<Board>& board, const std::string &from, const std::string &to, const std::string &promotion) {
     switch(level) {
         case 1:
             return level1(board, isWhite);
@@ -343,7 +320,7 @@ string ComputerPlayer::makeMove(Board *board, const string &from, const string &
             return level3(board, isWhite);
             break;
         case 4:
-            int depth = 0; // CHANGE
+            int depth = 4; // CHANGE
             return level4(board, isWhite, depth);
             break;
     }
