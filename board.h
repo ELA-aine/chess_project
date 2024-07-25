@@ -79,7 +79,7 @@ class Board {
 
 
     map<string, map<string, int>> allMoves(bool isWhite) const; // finds all possible moves and classifies
-
+    bool canPromote(const std::string &to);
 
 };
 

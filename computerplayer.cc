@@ -34,7 +34,7 @@ bool ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
     string promotion = "";
 
     // must meet promotion standards
-    if ((piece->getSymbol() == 'P' || piece->getSymbol() == 'p') && piece->canPromote(fromCoord)) {
+    if ((piece->getSymbol() == 'P' || piece->getSymbol() == 'p') && (*board).canPromote(toCoord)) {
         // random promotion
         string promotionPossibilities[5] = {"queen", "rook", "knight", "bishop", ""};
         // possible pieces to be promoted to
