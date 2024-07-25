@@ -235,6 +235,12 @@ void Board::display() {
     cout << "  abcdefgh" << endl;
 }
 
+void Board::changeBoard(const string &from, const string &to, char piece) {
+    cout << piece << endl;
+    setBoard(piece, to);
+    removePiece(from);
+}
+
 
 // for player implementations:
 map<string, char> Board::pieceCoords(bool isWhite) const {

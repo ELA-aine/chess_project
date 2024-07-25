@@ -43,10 +43,10 @@ class Board {
     bool isInCheckmate(bool white) const;  // Checks if the given color (white) is in checkmate
     bool isStalemate(bool white) const;  // Checks if the game is in a stalemate 
     //bool currentTurnIsWhite() const;  // Returns true if it's White's turn
-    void setup();  // Sets up the board for a new game or custom setup
-
+    //void setup();  // Sets up the board for a new game or custom setup
+    void changeBoard(const string &from, const string &to, char piece);
     // additional
-    void findPiece(char piece);
+    //void findPiece(char piece);
     void addMove(string from, string to, string piece, string promotion = "", string capture = "");
     
     
