@@ -49,12 +49,9 @@ class Board {
     // additional
     //void findPiece(char piece);
     void addMove(string from, string to, string piece, string promotion = "", string capture = "");
-<<<<<<< HEAD
     bool checkValidMove(const string &from, const string &to);
     bool isPathClear(const std::string &from, const std::string &to) const;
-=======
     bool canPromote(const std::string &to);
->>>>>>> 5f689251b568c2f5a033e8bbe90057ed2e1a2576
     
     vector<Move> tempMoveHistory;
     void makeAMove(const string &from, const string &to, const string &promotion, bool isWhite);
@@ -80,6 +77,8 @@ class Board {
 
     map<string, map<string, int>> allMoves(bool isWhite) const; // finds all possible moves and classifies
     bool canPromote(const std::string &to);
+    bool checkValidMove(const string &from, const string &to);
+    bool isValidMove(const string &from, const string &to) const;
 
 };
 
