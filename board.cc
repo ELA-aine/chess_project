@@ -132,7 +132,7 @@ void Board::undoLastMove() {
 }
 
 
-    bool Board::isInCheck(bool white) const {
+bool Board::isInCheck(bool white) const {
       string kingPosition;
       // this should be used in makeMove and isInCheck in game.h
       // check if the given white is in check
@@ -238,7 +238,7 @@ void Board::display() {
 void Board::changeBoard(const string &from, const string &to, char piece) {
     cout << piece << endl;
     setBoard(piece, to);
-    removePiece(from);
+    removeCoord(from);
 }
 
 
@@ -267,6 +267,7 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
 int Board::moveValue(string fromCoord, string toCoord, bool isWhite) const {
   Piece* fromPiece = getPiece(fromCoord);
   Piece* toPiece = getPiece(toCoord);
+
   if (isCheckmate(!isWhite)) {
     return 4; // checkmate
   }
@@ -536,13 +537,18 @@ map<string, map<string, int>> Board::allMoves(bool isWhite) const {
 } // finds all possible moves and classifies
 
 
+void Board::changeBoard(const string &from, const string &to, char piece) {
+    cout << piece << endl;
+    setBoard(piece, to);
+    removeCoord(from);
+}
+
 // map<string, string> tempMoveHistory;
 void makeAMove(string from, string to, string promotion) {
-
+  changeBoard(from, )
 }
 
 
 void undoMove(string from, string to, string promotion) {
-
 
 }
