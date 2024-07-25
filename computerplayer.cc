@@ -210,20 +210,18 @@ int miniMax(std::unique_ptr<Board>& board, int depth, int alpha, int beta, bool 
         map<string, int> toCoords = move.second;
         for (auto &to : toCoords) {
             pair<string, string> move = {from, to.first};
-            
+            moves.emplace_back(move);
         }
         
     }
 
     if (isMaxPlayer) {
         int maxEval = numeric_limits<int>::min();
-        for (auto &it : allMoves) {
-            from = it.from;
-            map<string, it> 
+        for (auto &it : moves) {
             
-            (*board).makeAMove(move);
+            (*board).makeAMove(it.first, it.second, "", isWhite);
             int eval = miniMax(board, depth - 1, alpha, beta, false, isWhite);
-            (*board).undoMove(move);
+            (*board).undoMove(it.first, it.second, "", isWhite);
 
             maxEval = max(maxEval, eval);
             alpha = max(alpha, eval);
@@ -235,14 +233,12 @@ int miniMax(std::unique_ptr<Board>& board, int depth, int alpha, int beta, bool 
         return maxEval;
     } else {
         int minEval = numeric_limits<int>::max();
-        for (it = allMoves.begin(); it != allMoves.end(); ++it) {
-            const string move = allMoves->first.first + allMoves->second.second;
-            (*board).makeAMove(move);
+        for (auto &it : moves) {
+            (*board).makeAMove(it.first, it.second, "", isWhite);
             int eval = miniMax(board, depth - 1, alpha, beta, true, isWhite);
-            (*board).undoMove(move);
+            (*board).undoMove(it.first, it.second, "", isWhite);
             minEval = min(minEval, eval);
             beta = min(beta, eval);
-
 
             if (beta <= alpha) {
                 break;
@@ -255,41 +251,59 @@ int miniMax(std::unique_ptr<Board>& board, int depth, int alpha, int beta, bool 
 
 bool ComputerPlayer::level4(std::unique_ptr<Board>& board, bool isWhite, int depth) {
     // use alpha beta algorithm
-
+    Board* temp = dynamic_cast<Board*>(board.get());
     //map<map<string, char>, map<string, int>> allMoves(bool isWhite);
     // <from, symbol>, <to, rank>
 
-    string bestMove;
+    string bestMoveTo, bestMoveFrom, promotion;
     int bestValue = numeric_limits<int>::min();
     int alpha = numeric_limits<int>::min();
     int beta = numeric_limits<int>::max();
 
     // get legal moves
-    map<map<string, char>, map<string, int>> allMovesWhite = (*board).allMoves(isWhite);
-    map<map<string, char>, map<string, int>> allMovesBlack = (*board).allMoves(!isWhite);
+    map<string, map<string, int>> allMovesWhite = temp->allMoves(isWhite);
+    map<string, map<string, int>> allMovesBlack = temp->allMoves(!isWhite);
 
     // combine into one map
-    map<map<string, char>, map<string, int>> allMoves;
+    map<string, map<string, int>> allMoves;
     allMoves.insert(allMovesWhite.begin(), allMovesWhite.end());
     allMoves.insert(allMovesBlack.begin(), allMovesBlack.end());
-    //
+
 
     auto it = allMoves.begin();
     int boardValue;
 
-    for (it = allMoves.begin(); it != allMoves.end(); ++it) {
-        const string move = allMoves->first.first + allMoves->second.second;
-        (*board).makeAMove(move);
+    string to, from;
+    vector<pair<string, string>> moves;
+
+    for (auto &move : allMoves) {
+        from = move.first;
+        map<string, int> toCoords = move.second;
+        for (auto &to : toCoords) {
+            pair<string, string> move = {from, to.first};
+            moves.emplace_back(move);
+        }
+        
+    }
+
+    for (auto &it : moves) {
+
+        (*board).makeAMove(it.first, it.second, "", isWhite);
         boardValue = miniMax(board, depth - 1, alpha, beta, false, isWhite);
-        (*board).undoMove(move);
+        (*board).undoMove(it.first, it.second, "", isWhite);
 
         if (boardValue > bestValue) {
             bestValue = boardValue;
-            bestMove = move;
+
+            bestMoveTo = it.second; 
+            bestMoveFrom = it.first; 
         }
     }
 
-    return bestMove;
+    Piece *piece = (*temp).getPiece(bestMoveFrom);
+    (*board).changeBoard(bestMoveFrom, bestMoveTo, piece->getSymbol());
+    return true;
+
 
 }
 
