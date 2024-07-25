@@ -7,17 +7,37 @@ const int ROW = 8;
 const int COL = 8;
 
 
-  Board::Board() {
-    auto board = make_unique<vector<vector<unique_ptr<Piece>>>>();
-    board->resize(8);
-    for (auto& row : *board) {
-        row.resize(8);
-    }
-  }     // constructing a board;
+Board::Board() {
+  auto board = make_unique<vector<vector<unique_ptr<Piece>>>>();
+  board->resize(8);
+  for (auto& row : *board) {
+      row.resize(8);
+  }
+}     // constructing a board;
 
-  void Board::init() {
-    setupBoard();
-  } 
+// Board::Board(const Board& other) {
+//     // Deep copy of the board
+//     board = std::make_unique<std::vector<std::vector<std::unique_ptr<Piece>>>>();
+//     for (const auto& row : *other.board) {
+//         std::vector<std::unique_ptr<Piece>> newRow;
+//         for (const auto& piece : row) {
+//             if (piece) {
+//                 newRow.push_back(piece->clone());
+//             } else {
+//                 newRow.push_back(nullptr);
+//             }
+//         }
+//         board->push_back(std::move(newRow));
+//     }
+
+//     // Copy the move history
+//     tempMoveHistory = other.tempMoveHistory;
+// }
+
+
+void Board::init() {
+  setupBoard();
+} 
     
     void Board::setupBoard() {
       setBoard('r', "a8");
@@ -264,20 +284,24 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
     return pieceMap;
 }
 
-int Board::moveValue(string fromCoord, string toCoord, bool isWhite) const {
+int Board::moveValue(const std::string &fromCoord, const std::string &toCoord, bool isWhite) const {
   Piece* fromPiece = getPiece(fromCoord);
   Piece* toPiece = getPiece(toCoord);
 
-  if (isCheckmate(!isWhite)) {
-    return 4; // checkmate
-  }
-  if (isCheck(!isWhite)) {
-    return 3; // check
-  }
+  int value = 1;
+
+  // if (isInCheckmate(!isWhite)) {
+  //     value = 4; // checkmate
+  // } else if (isInCheck(!isWhite)) {
+  //     value = 3; // check
+  // } else 
+  
   if (toPiece && toPiece->isWhite() != isWhite) {
-    return 2; // capture
+    value = 2; // capture
   }
-  return 1; // Normal move
+
+  // No need to undo move, as we used a temporary board
+  return value;
 }
 
 
@@ -543,20 +567,36 @@ void Board::changeBoard(const string &from, const string &to, char piece) {
     removeCoord(from);
 }
 
-// map<string, string> tempMoveHistory;
-void makeAMove(string from, string to, string promotion) {
-  changeBoard(from, )
+// vector<Move> tempMoveHistory;
+void Board::makeAMove(const string &from, const string &to, const string &promotion, bool isWhite) {
+  Piece *piece = getPiece(from);
+  Piece *capturedPiece = getPiece(to);
+
+  string capture = capturedPiece ? string(1, capturedPiece->getSymbol()) : "";
+
+  changeBoard(from, to, piece->getSymbol());
+
+  Move move(from, to, isWhite, string(1, piece->getSymbol()), capture, promotion);
+  tempMoveHistory.emplace_back(move);
 }
 
 
-void undoMove(string from, string to, string promotion) {
+void Board::undoMove(const string &from, const string &to, const string &promotion, bool isWhite) {
+  Piece *piece = getPiece(from);
+  Piece *capturedPiece = getPiece(to);
 
+  string capture = capturedPiece ? string(1, capturedPiece->getSymbol()) : "";
+
+  changeBoard(from, to, piece->getSymbol());
+
+  auto val = tempMoveHistory.back(); // idk if i need to delete
+  tempMoveHistory.pop_back();
 }
 
 void Board::changeBoard(const string &from, const string &to, char piece) {
     cout << piece << endl;
     setBoard(piece, to);
-    removePiece(from);
+    removeCoord(from);
 }
 
 void Board::display() {
@@ -585,7 +625,7 @@ void Board::display() {
 }
 
 bool Board::checkValidMove(const string &from, const string &to) {
-   auto movingPiece = getPiece(from);
+  auto movingPiece = getPiece(from);
     if (!movingPiece) {
         cout << "No piece at the starting position!" << endl;
         return false;
@@ -625,7 +665,7 @@ bool Board::checkValidMove(const string &from, const string &to) {
 
 
 
-bool Board::isPathClear(const std::string &from, const std::string &to) const {     //Bishop
+bool Board::isPathClear(const string &from, const string &to) const {     //Bishop
     int startX = from[0] - 'a'; // Convert 'a'-'h' to 0-7
     int startY = from[1] - '1'; // Convert '1'-'8' to 0-7
     int endX = to[0] - 'a'; // Convert 'a'-'h' to 0-7
@@ -639,7 +679,7 @@ bool Board::isPathClear(const std::string &from, const std::string &to) const { 
 
     while (x != endX && y != endY) {
         // Check if there's a piece on the current square
-        auto piece = getPiece(std::string(1, 'a' + x) + std::to_string(y + 1));
+        auto piece = getPiece(string(1, 'a' + x) + to_string(y + 1));
         if (piece) {
             // If there's a piece and it's friendly, path is blocked
             if (piece->isWhite() == getPiece(from)->isWhite()) {

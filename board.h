@@ -26,6 +26,7 @@ class Board {
 
   public:
     Board();      // constructing a board;
+    // Board(const Board& other);
     virtual void init();    // initializing a board by putting all the necessary piece in *board
     virtual void display();// (or ostream)
     // display/output the current board
@@ -48,11 +49,12 @@ class Board {
     // additional
     //void findPiece(char piece);
     void addMove(string from, string to, string piece, string promotion = "", string capture = "");
+    bool checkValidMove(const string &from, const string &to);
+    bool isPathClear(const std::string &from, const std::string &to) const;
     
-    
-    map<string, string> tempMoveHistory;
-    void makeAMove(string, string, string);
-    void undoMove(string, string, string);
+    vector<Move> tempMoveHistory;
+    void makeAMove(const string &from, const string &to, const string &promotion, bool isWhite);
+    void undoMove(const string &from, const string &to, const string &promotion, bool isWhite);
 
     // for player implementation
     map<string, char> pieceCoords(bool isWhite) const; // returns the coordinates of pieces left on board 
@@ -63,7 +65,7 @@ class Board {
     // check -> 3
     // capture -> 2
     // normal -> 1
-    int moveValue(string fromCoord, string toCoord, bool isWhite)const ;
+    int moveValue(const std::string &fromCoord, const std::string &toCoord, bool isWhite)const ;
     map<string, int> getPawnMoves(string coord, bool isWhite) const;
     map<string, int> getKnightMoves(string coord, bool isWhite) const;
     map<string, int> getBishopMoves(string coord, bool isWhite) const;
