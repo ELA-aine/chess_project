@@ -546,3 +546,112 @@ void undoMove(string from, string to, string promotion) {
 
 
 }
+
+void Board::changeBoard(const string &from, const string &to, char piece) {
+    cout << piece << endl;
+    setBoard(piece, to);
+    removePiece(from);
+}
+
+void Board::display() {
+    int count;
+      for (int row = 0; row < 8; ++row) {
+        int curRow = 8 - row;  // Calculate the current row number in descending order
+        cout << curRow << " ";  // Print the current row number
+        count = 0;
+        for (const auto& cell : board[row]) {
+            
+            if (cell) {
+                cout << cell->getSymbol();
+            } else {
+                if (count % 2 == 0) {
+                    cout << "_";
+                } else {
+                    cout << " ";
+                }
+            }
+            count++;
+        }
+        cout << endl;
+    }
+    cout << endl;
+    cout << "  abcdefgh" << endl;
+}
+
+bool Board::checkValidMove(const string &from, const string &to) {
+   auto movingPiece = getPiece(from);
+    if (!movingPiece) {
+        cout << "No piece at the starting position!" << endl;
+        return false;
+    }
+
+    auto destinationPiece = getPiece(to);
+    
+    // Check if the move is valid for the piece
+    if (!movingPiece->isValidMove(from, to)) {
+        cout << "Invalid move, move again" << endl;
+        return false;
+    }
+
+    // If it's a piece that moves in a line, check if the path is clear
+    char pieceSymbol = movingPiece->getSymbol();
+    if (pieceSymbol == 'B' || pieceSymbol == 'b' || pieceSymbol == 'R' || pieceSymbol == 'r' || pieceSymbol == 'Q' || pieceSymbol == 'q') {
+        if (!isPathClear(from, to)) {
+            cout << "Path is not clear!" << endl;
+            return false;
+        }
+    }
+
+    // Check if destination has a piece and handle capture
+    if (destinationPiece) {
+        if (destinationPiece->isWhite() == movingPiece->isWhite()) {
+            cout << "Cannot capture your own piece!" << endl;
+            return false;
+        } else {
+            cout << "Capture " << destinationPiece->getSymbol() << endl;
+        }
+    }
+
+    // Perform the move
+    changeBoard(from, to, movingPiece->getSymbol());
+    return true;
+}
+
+
+
+bool Board::isPathClear(const std::string &from, const std::string &to) const {     //Bishop
+    int startX = from[0] - 'a'; // Convert 'a'-'h' to 0-7
+    int startY = from[1] - '1'; // Convert '1'-'8' to 0-7
+    int endX = to[0] - 'a'; // Convert 'a'-'h' to 0-7
+    int endY = to[1] - '1'; // Convert '1'-'8' to 0-7
+
+    int dx = (endX > startX) ? 1 : -1;
+    int dy = (endY > startY) ? 1 : -1;
+
+    int x = startX + dx;
+    int y = startY + dy;
+
+    while (x != endX && y != endY) {
+        // Check if there's a piece on the current square
+        auto piece = getPiece(std::string(1, 'a' + x) + std::to_string(y + 1));
+        if (piece) {
+            // If there's a piece and it's friendly, path is blocked
+            if (piece->isWhite() == getPiece(from)->isWhite()) {
+                return false;
+            }
+        }
+        x += dx;
+        y += dy;
+    }
+
+    // Check if the destination square is occupied by a friendly piece
+    auto destinationPiece = getPiece(to);
+    if (destinationPiece) {
+        if (destinationPiece->isWhite() == getPiece(from)->isWhite()) {
+            return false; // Cannot move to a square occupied by a friendly piece
+        }
+    }
+
+    return true;
+}
+
