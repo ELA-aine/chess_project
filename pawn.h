@@ -10,7 +10,7 @@ public:
     char getSymbol() const override;  // Provides the symbol for the Pawn
 
     bool isEnPassantMove(const std::string &from, const std::string &to, const Board &board) const;  // Checks if the move is an en passant capture
-    void performEnPassant(const std::string &from, const std::string &to, Board &board);  // Executes the en passant capture
+    void performEnPassant(const std::string &from, const std::string &to, Board &board);  // Executes the en passant capture. (this may needs to be executed in makemove instead)
     void resetEnPassantStatus();  // Resets the en passant status
 
 private:

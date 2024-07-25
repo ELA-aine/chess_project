@@ -20,7 +20,6 @@ bool King::isValidMove(const std::string &from, const std::string &to, const std
    int dx = std::abs(startX - endX);
    int dy = std::abs(startY - endY);
 
-
    // Check if the move is a valid king move (one square in any direction)
    if ((dx <= 1 && dy <= 1) && !(dx == 0 && dy == 0)) {
        // Check if the destination square is occupied by a friendly piece

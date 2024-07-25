@@ -4,15 +4,10 @@
 #include <map>
 #include <string>
 #include <iostream>
-#include "piece.h"
-#include "king.h"
-#include "queen.h"
-#include "knight.h"
-#include "pawn.h"
-#include "rook.h"
-#include "bishop.h"
 #include "move.h"
 #include <memory>
+
+class Piece;  // Forward declaration
 
 using namespace std;
 

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
+#include <memory>
 
 /*
 int main() {
@@ -100,21 +101,21 @@ int main() {
             std::string whitePlayerType, blackPlayerType;
             std::cin >> whitePlayerType >> blackPlayerType; // so the contract is always the first type string after game is whitePlayer, and second is blackPlayer, option: [human/computer] like Elaine wrote
 
-            Player *whitePlayer = nullptr; // initialize a new string to Player type
-            Player *blackPlayer = nullptr;
+            std::unique_ptr<Player> whitePlayer = nullptr;; // initialize a new string to Player type
+            std:unique_ptr<Player> blackPlayer = nullptr; 
 
             if (whitePlayerType == "human") { // the logic here is to set the Player correctly according to type
-                whitePlayer = new HumanPlayer(true); // constructor 
+               whitePlayer = std::make_unique<HumanPlayer>(true); // constructor 
             } else if (whitePlayerType.rfind("computer", 0) == 0) { // we are writing the level like computer1 computer2 etc so this line checks if the first substring is computer.
                 int level = stringToInt(whitePlayerType.substr(8)); // then we could check the last number and convert it to interger
-                whitePlayer = new ComputerPlayer(true, level);
+                whitePlayer = std::make_unique<ComputerPlayer> (true, level); 
             }
 
             if (blackPlayerType == "human") {
-                blackPlayer = new HumanPlayer(false);
+                blackPlayer = std::make_unique<HumanPlayer>(false);;
             } else if (blackPlayerType.rfind("computer", 0) == 0) {
                 int level = std::stoi(blackPlayerType.substr(8));
-                blackPlayer = new ComputerPlayer(false, level); // i think through it and agree with patricia, using boolean to represent whether it is black or white is easier when constructing a player. i use false for black and true for white. we could discuss further. 
+                blackPlayer = std::make_unique<ComputerPlayer> (false, level); // i think through it and agree with patricia, using boolean to represent whether it is black or white is easier when constructing a player. i use false for black and true for white. we could discuss further. 
             }
 
             game.start(whitePlayer, blackPlayer); // I am assuming this will create a copy of the players so i delete the players next line.

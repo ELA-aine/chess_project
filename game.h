@@ -23,6 +23,17 @@ class Game{
  // Player *player1;        // player1, human/computer
   //Player *player2;        // player2, human/computer       
   bool isWhite = true;    // current player. Default starts from white
+
+   class Vec{             // this class is for storing the coordinate.        
+    public:               // although coordinate's input is char + int, but we can convert char to int
+    //    
+    string from, to;
+    Vec(string from, string to) : from(from), to(to) {}         //    so that we could iterate over the board easily
+  };
+
+  // change stirng, vec to pair<char, vec>
+  vector<pair<char, Vec>> whiteHistory;  // move history for white player
+  vector<pair<char, Vec>> blackHistory;          // move history for black player
   map<string, int> scoreBoard;            // score board for white player and black player
 
   public:
@@ -30,7 +41,7 @@ class Game{
     void start(unique_ptr<Player> white, unique_ptr<Player> black);     
       // constructor of game, use string to decide what player we have for white and black
       //    and initialize the field accordingly
-    void makeMove(const string &from, const string &to, const string &promotion = ""); 
+    void makeMove(const string &from, const string &to, const string &promotion = "") const; 
       // if CHECKMATE -> isWinner(whoever play)
       // if CHECK -> I don't know
       // else:
