@@ -6,9 +6,9 @@
 
 #include <string>
 #include <memory> // For std::unique_ptr// For std::unique_ptr
+#include "board.h"
 
 
-class Board;  // Forward declaration
 
 class Piece {
 protected:
