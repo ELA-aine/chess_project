@@ -195,7 +195,7 @@ bool Board::isInCheckmate(bool white) const { // meaning no moves for king
         char pieceType = entry.second;
 
         // Get all possible moves for the current piece.
-        vector<map<string, int>> possibleMovesForPiece = possibleMoves(coord);
+        map<string, int> possibleMovesForPiece = possibleMoves(coord, white);
 
         // Check if there are any possible moves for this piece.
         if (!possibleMovesForPiece.empty()) {
@@ -206,7 +206,10 @@ bool Board::isInCheckmate(bool white) const { // meaning no moves for king
 }
 
 bool Board::isStalemate(bool white) const {
-    // Get all the coordinates of the pieces for the given color.
+    if (isInCheck(white)) {
+        return false;
+    }
+
     map<string, char> pieces = pieceCoords(white);
 
     // Iterate over each piece to find if there is any legal move.
@@ -216,7 +219,7 @@ bool Board::isStalemate(bool white) const {
         char pieceType = entry.second;
 
         // Get all possible moves for the current piece.
-        vector<map<string, int>> possibleMovesForPiece = possibleMoves(coord);
+        map<string, int> possibleMovesForPiece = possibleMoves(coord, white);
 
         // Check if there are any possible moves for this piece.
         if (!possibleMovesForPiece.empty()) {
@@ -225,15 +228,10 @@ bool Board::isStalemate(bool white) const {
         }
     }
 
-    // If no piece has a legal move, check if the player is in check.
-    if (isInCheck(white)) {
-        // If the player is in check and has no legal moves, it's checkmate, not stalemate.
-        return false;
-    }
-
-    // If no pieces have legal moves and the player is not in check, it's a stalemate.
+    // If no legal moves are available and the king is not in check, it's a stalemate.
     return true;
 }
+
 
  // meaning no legals moves but is not in check.
   //void setup();  // Sets up the board for a new game or custom setup
