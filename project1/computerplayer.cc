@@ -2,6 +2,9 @@
 #include "player.h"
 #include <limits>
 // for INT_MAX/MIN, max(), min()
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 
 
 #include "computerplayer.h"
@@ -12,7 +15,7 @@ ComputerPlayer::ComputerPlayer(int level, bool isWhite) : Player{isWhite}, level
 
 bool ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
     // random moves
-    map<string, char> piecesLeft = board->pieceCoords(isWhite);
+    /*map<string, char> piecesLeft = board->pieceCoords(isWhite);
 
     // find from coord
     auto it = piecesLeft.begin();
@@ -45,7 +48,34 @@ bool ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
     // void changeBoard(const string &from, const string &to, char piece);
     board->changeBoard(fromCoord, toCoord, piece->getSymbol());
     return true;
-    // (*board).getPiece(fromCoord)
+    // (*board).getPiece(fromCoord)*/
+
+    char random_char = 'a' + (std::rand() % 8);
+
+    // Generate a random number between 1 and 8
+    int random_number = 1 + (std::rand() % 8);
+
+    // Combine the random character and number into a coordinate
+    std::cout << "Random coordinate: " << random_char << random_number << std::endl;
+
+    std::vector<char> pieceWhite = {
+        'K', 'Q', 'R', 'B', 'K', 'P'
+    };
+
+    std::vector<char> pieceBlack = {
+        'k', 'q', 'r', 'b', 'k', 'p'
+    };
+
+    int randomPiece = 1 + (std::rand() % 6);
+    char piece;
+    if (isWhite) {
+        piece = pieceWhite[randomPiece];
+        std::cout << "Random Piece: " << piece << std::endl;
+    } else {
+        piece = pieceBlack[randomPiece];
+        std::cout << "Random Piece: " << piece << std::endl;
+    }   
+    return true;
 
 }
 
