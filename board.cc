@@ -17,9 +17,9 @@ Board::Board() {
 
 // Board::Board(const Board& other) {
 //     // Deep copy of the board
-//     board = std::make_unique<std::vector<std::vector<std::unique_ptr<Piece>>>>();
+//     board = make_unique<vector<vector<unique_ptr<Piece>>>>();
 //     for (const auto& row : *other.board) {
-//         std::vector<std::unique_ptr<Piece>> newRow;
+//         vector<unique_ptr<Piece>> newRow;
 //         for (const auto& piece : row) {
 //             if (piece) {
 //                 newRow.push_back(piece->clone());
@@ -27,7 +27,7 @@ Board::Board() {
 //                 newRow.push_back(nullptr);
 //             }
 //         }
-//         board->push_back(std::move(newRow));
+//         board->push_back(move(newRow));
 //     }
 
 //     // Copy the move history
@@ -271,9 +271,7 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
       for (size_t col = 0; col < (*board)[row].size(); ++col) {
         const auto& piece = (*board)[row][col];
         if (piece && piece->isWhite() == isWhite) {
-          string rows = to_string(row);
-          string cols = to_string(col);
-          string coord = rows + cols;
+          string coord = to_string(row) + to_string(col);
           pieceMap[coord] = piece->getSymbol();
         }
       }
@@ -284,7 +282,7 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
 
 bool isCastle()
 
-// bool Pawn::isEnPassantMove(const std::string &from, const std::string &to, const Board &board) const {
+// bool Pawn::isEnPassantMove(const string &from, const string &to, const Board &board) const {
 //     int startX = from[0] - 'a'; // Convert 'a'-'h' to 0-7
 //     int startY = from[1] - '1'; // Convert '1'-'8' to 0-7
 //     int endX = to[0] - 'a'; // Convert 'a'-'h' to 0-7
@@ -295,8 +293,8 @@ bool isCastle()
 //     }
 
 //     int direction = (this->isWhite()) ? 1 : -1;
-//     if (endY == startY + direction && std::abs(endX - startX) == 1) {
-//         auto adjacentPawn = board.getPiece(std::string(1, 'a' + endX) + std::to_string(startY));
+//     if (endY == startY + direction && abs(endX - startX) == 1) {
+//         auto adjacentPawn = board.getPiece(string(1, 'a' + endX) + to_string(startY));
 //         if (adjacentPawn && adjacentPawn->getSymbol() == (this->isWhite() ? 'p' : 'P')) {
 //             return true;
 //         }
@@ -307,7 +305,7 @@ bool isCastle()
 
 
 
-int Board::moveValue(const std::string &fromCoord, const std::string &toCoord, bool isWhite) const {
+int Board::moveValue(const string &fromCoord, const string &toCoord, bool isWhite) const {
   Piece* fromPiece = getPiece(fromCoord);
   Piece* toPiece = getPiece(toCoord);
 
@@ -762,7 +760,7 @@ bool Board::isPathClear(const string &from, const string &to) const {     //Bish
     return true;
 }
 
-bool Board::canPromote(const std::string &to) {
+bool Board::canPromote(const string &to) {
     int row = 8 - (to[1] - '0');
     return row == 7 || row == 0;
 }
