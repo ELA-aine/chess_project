@@ -3,7 +3,7 @@
 
 HumanPlayer::HumanPlayer(bool isWhite) : Player{isWhite} {}
 
-std::string HumanPlayer::makeMove(std::unique_ptr<Board>& board, const std::string &from, 
+bool HumanPlayer::makeMove(std::unique_ptr<Board>& board, const std::string &from, 
     const std::string &to, const std::string &promotion) {
 
     bool canMove;
@@ -40,7 +40,7 @@ std::string HumanPlayer::makeMove(std::unique_ptr<Board>& board, const std::stri
     if (canMove) {
         return to + from + promotion + isCheck;
 
-        
+
     } else {
         return "invalid move";
     }

@@ -22,7 +22,6 @@ class Player{
     // determine if player can move or not
     // some other function
     virtual ~Player();
-    bool isWhite() const;  // Returns true if the player is White, false if Black
 
 };
 

@@ -11,8 +11,18 @@ using namespace std;
 ComputerPlayer::ComputerPlayer(int level, bool isWhite) : level{level}, isWhite{isWhite}, Player{isWhite} {}
 
 bool ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
+    
+    // static bool seeded = false;
+    // if (!seeded) {
+    //     srand(static_cast<unsigned int>(time(0)));
+    //     seeded = true;
+    // }
     // random moves
     map<string, char> piecesLeft = (*board).pieceCoords(isWhite);
+
+    if (piecesLeft.empty()) {
+        return false;  // No pieces left to move
+    }
 
     // find from coord
     auto it = piecesLeft.begin();
@@ -23,13 +33,16 @@ bool ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
     string fromCoord = it->first; 
     Piece* piece = (*board).getPiece(fromCoord);
 
-
     map<string, int> possibleMoves = (*board).possibleMoves(fromCoord, isWhite);
+
+    if (possibleMoves.empty()) {
+        return false;  // No valid moves for the selected piece
+    }
+
     auto jt = possibleMoves.begin();
     advance(jt, rand() % possibleMoves.size());
 
     string toCoord = jt->first;
-
 
     string promotion = "";
 
@@ -221,7 +234,7 @@ int miniMax(std::unique_ptr<Board>& board, int depth, int alpha, int beta, bool 
             
             (*board).makeAMove(it.first, it.second, "", isWhite);
             int eval = miniMax(board, depth - 1, alpha, beta, false, isWhite);
-            (*board).undoMove(it.first, it.second, "", isWhite);
+            (*board).undoMove(it.second, it.first, "", isWhite);
 
             maxEval = max(maxEval, eval);
             alpha = max(alpha, eval);
@@ -236,7 +249,7 @@ int miniMax(std::unique_ptr<Board>& board, int depth, int alpha, int beta, bool 
         for (auto &it : moves) {
             (*board).makeAMove(it.first, it.second, "", isWhite);
             int eval = miniMax(board, depth - 1, alpha, beta, true, isWhite);
-            (*board).undoMove(it.first, it.second, "", isWhite);
+            (*board).undoMove(it.second, it.first, "", isWhite);
             minEval = min(minEval, eval);
             beta = min(beta, eval);
 
@@ -290,7 +303,7 @@ bool ComputerPlayer::level4(std::unique_ptr<Board>& board, bool isWhite, int dep
 
         (*board).makeAMove(it.first, it.second, "", isWhite);
         boardValue = miniMax(board, depth - 1, alpha, beta, false, isWhite);
-        (*board).undoMove(it.first, it.second, "", isWhite);
+        (*board).undoMove(it.second, it.first, "", isWhite);
 
         if (boardValue > bestValue) {
             bestValue = boardValue;
@@ -320,7 +333,7 @@ bool ComputerPlayer::makeMove(std::unique_ptr<Board>& board, const std::string &
             return level3(board, isWhite);
             break;
         case 4:
-            int depth = 4; // CHANGE
+            int depth = 4; 
             return level4(board, isWhite, depth);
             break;
     }
