@@ -282,6 +282,8 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
     return pieceMap;
 }
 
+bool isCastle()
+
 // bool Pawn::isEnPassantMove(const std::string &from, const std::string &to, const Board &board) const {
 //     int startX = from[0] - 'a'; // Convert 'a'-'h' to 0-7
 //     int startY = from[1] - '1'; // Convert '1'-'8' to 0-7
@@ -303,10 +305,7 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
 //     return false;
 // }
 
-bool Board::checkEnPassant(const std::string &fromCoord, const std::string &toCoord, bool isWhite) {
-  
 
-}
 
 int Board::moveValue(const std::string &fromCoord, const std::string &toCoord, bool isWhite) const {
   Piece* fromPiece = getPiece(fromCoord);

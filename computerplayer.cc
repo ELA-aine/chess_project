@@ -11,8 +11,18 @@ using namespace std;
 ComputerPlayer::ComputerPlayer(int level, bool isWhite) : level{level}, isWhite{isWhite}, Player{isWhite} {}
 
 bool ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
+    
+    // static bool seeded = false;
+    // if (!seeded) {
+    //     srand(static_cast<unsigned int>(time(0)));
+    //     seeded = true;
+    // }
     // random moves
     map<string, char> piecesLeft = (*board).pieceCoords(isWhite);
+
+    if (piecesLeft.empty()) {
+        return false;  // No pieces left to move
+    }
 
     // find from coord
     auto it = piecesLeft.begin();
@@ -23,13 +33,16 @@ bool ComputerPlayer::level1(std::unique_ptr<Board>& board, bool isWhite) {
     string fromCoord = it->first; 
     Piece* piece = (*board).getPiece(fromCoord);
 
-
     map<string, int> possibleMoves = (*board).possibleMoves(fromCoord, isWhite);
+
+    if (possibleMoves.empty()) {
+        return false;  // No valid moves for the selected piece
+    }
+
     auto jt = possibleMoves.begin();
     advance(jt, rand() % possibleMoves.size());
 
     string toCoord = jt->first;
-
 
     string promotion = "";
 
