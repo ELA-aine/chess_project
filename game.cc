@@ -14,27 +14,43 @@ void Game::start(unique_ptr<Player> white, unique_ptr<Player> black) {
   display();
 }
 
-void Game::makeMove(const string &from, const string &to, const string &promotion = "") {
-  char thePiece = board->getPiece(from)->getSymbol();
-  if (isWhite) {
-    string valid = player1->makeMove(board, from, to, promotion);
-    if (valid == "invalid move") {
-      cout << valid;
-    }
-  } else {
-    string valid = player2->makeMove(board, from, to, promotion);
-    if (valid == "invalid move") {
-      cout << valid;
-    }
-  }
+void Game::makeMove(const string &from, const string &to, const string &promotion) const {
+    cout << "Current turn is: " << (isWhite ? "White" : "Black") << endl;
 
-  changePlayer();
-  display();
+    bool valid;
+    if (isWhite) {
+      if(canEnPassant){
+        valid = player1->makeMove(board, from, to, promotion);
+      }
+    } else {
+        valid = player2->makeMove(board, from, to, promotion);
+    }
 
-  
+    if (!valid) {
+        cout << "Invalid move" << endl;
+        return; // Exit the function if the move is invalid
+    }
+
+    // Check if the king is in check after the move
+    bool isKingInCheck = board->isInCheck(!isWhite);
+    if (isKingInCheck) {
+        cout << "King is in check!" << endl;
+        if(board->isInCheckmate(!isWhite)) {
+          isWinner(isWhite);
+        }
+    }
+
+    // check stalemate (every pieces has no possible moves but not check)
+    if(board->isStalemate(!isWhite)) {
+      cout << "The game is draw!" << endl;
+    }
+
+    // Change the player if the move is valid and no check condition
+    changePlayer();
 }
 
-bool Game::isCheck() {
+
+bool Game::isCheck() const{
   if (isWhite && board->isInCheck(true)) {
     return true;
   } else if (!isWhite && board->isInCheck(false)) {
@@ -44,7 +60,7 @@ bool Game::isCheck() {
   }
 }
 
-bool Game::isCheckMate() {
+bool Game::isCheckMate() const{
   if (isWhite && board->isInCheckmate(true)) {
     isWinner(false);
     return true;
@@ -56,11 +72,11 @@ bool Game::isCheckMate() {
   }
 }
 
-void Game::changePlayer() {
+void Game::changePlayer() const {
   isWhite = !isWhite;
 }
 
-void Game::isWinner(bool white) {
+void Game::isWinner(bool white) const{
   if(white) {
     cout << "CheckMate! White wins!" << endl;
     addScore(true);
