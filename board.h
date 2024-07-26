@@ -79,6 +79,7 @@ class Board {
     bool canPromote(const std::string &to);
     bool checkValidMove(const string &from, const string &to);
     bool isValidMove(const string &from, const string &to) const;
+    bool checkEnPassant(const std::string &fromCoord, const std::string &toCoord, bool isWhite);
 
 };
 

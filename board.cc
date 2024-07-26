@@ -39,7 +39,7 @@ void Board::init() {
   setupBoard();
 } 
     
-    void Board::setupBoard() {
+void Board::setupBoard() {
       setBoard('r', "a8");
       setBoard('r', "h8");
       setBoard('n', "b8");
@@ -75,7 +75,7 @@ void Board::init() {
       // set PAWN
 
     }
-    void Board::setBoard(char piece, string coord) {
+void Board::setBoard(char piece, string coord) {
       
       int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
       int row = 8 - stoi(coord.substr(1));
@@ -124,7 +124,7 @@ void Board::init() {
     // set PIECE at COORD, replace if COORD already has a piece
     // restriction: pawn is not at first row or last row
     //              special piece can only appear once in the board
-    void Board::removeCoord(string coord) {
+void Board::removeCoord(string coord) {
       int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
       int row = 8 - stoi(coord.substr(1));
       (*board)[row][col] = nullptr;
@@ -203,7 +203,7 @@ bool Board::isInCheckmate(bool white) const { // meaning no moves for king
             return false;
         }
     }
- }
+}
 
 bool Board::isStalemate(bool white) const {
     // Get all the coordinates of the pieces for the given color.
@@ -282,6 +282,32 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
     }
     
     return pieceMap;
+}
+
+// bool Pawn::isEnPassantMove(const std::string &from, const std::string &to, const Board &board) const {
+//     int startX = from[0] - 'a'; // Convert 'a'-'h' to 0-7
+//     int startY = from[1] - '1'; // Convert '1'-'8' to 0-7
+//     int endX = to[0] - 'a'; // Convert 'a'-'h' to 0-7
+//     int endY = to[1] - '1'; // Convert '1'-'8' to 0-7
+
+//     if (!enPassantPossible) {
+//         return false;
+//     }
+
+//     int direction = (this->isWhite()) ? 1 : -1;
+//     if (endY == startY + direction && std::abs(endX - startX) == 1) {
+//         auto adjacentPawn = board.getPiece(std::string(1, 'a' + endX) + std::to_string(startY));
+//         if (adjacentPawn && adjacentPawn->getSymbol() == (this->isWhite() ? 'p' : 'P')) {
+//             return true;
+//         }
+//     }
+
+//     return false;
+// }
+
+bool Board::checkEnPassant(const std::string &fromCoord, const std::string &toCoord, bool isWhite) {
+  
+
 }
 
 int Board::moveValue(const std::string &fromCoord, const std::string &toCoord, bool isWhite) const {
