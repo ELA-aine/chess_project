@@ -1,0 +1,415 @@
+8 rnbqkbnr
+7 pppppppp
+6 _ _ _ _ 
+5 _ _ _ _ 
+4 _ _ _ _ 
+3 _ _ _ _ 
+2 PPPPPPPP
+1 RNBQKBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+It's black turn
+8 rnbqkbnr
+7 pppppppp
+6 _ _ _ _ 
+5 _ _ _ _ 
+4 _ _P_ _ 
+3 _ _ _ _ 
+2 PPP PPPP
+1 RNBQKBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+It's white turn
+8 rnbqkbnr
+7 ppp pppp
+6 _ _ _ _ 
+5 _ _p_ _ 
+4 _ _P_ _ 
+3 _ _ _ _ 
+2 PPP PPPP
+1 RNBQKBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+It's black turn
+8 rnbqkbnr
+7 ppp pppp
+6 _ _ _ _ 
+5 _ _p_ _ 
+4 _ _PP _ 
+3 _ _ _ _ 
+2 PPP _PPP
+1 RNBQKBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+It's white turn
+8 rnbqkbnr
+7 ppp _ppp
+6 _ _ _ _ 
+5 _ _pp _ 
+4 _ _PP _ 
+3 _ _ _ _ 
+2 PPP _PPP
+1 RNBQKBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+Capture p
+It's black turn
+8 rnbqkbnr
+7 ppp _ppp
+6 _ _ _ _ 
+5 _ _pP _ 
+4 _ _ P _ 
+3 _ _ _ _ 
+2 PPP _PPP
+1 RNBQKBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+Capture P
+It's white turn
+8 rnbqkbnr
+7 ppp _ppp
+6 _ _ _ _ 
+5 _ _ P _ 
+4 _ _ p _ 
+3 _ _ _ _ 
+2 PPP _PPP
+1 RNBQKBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+3034
+31
+this is x and y: 3, 1
+this is x and y: 3, 2
+this is x and y: 3, 3
+It's black turn
+8 rnbqkbnr
+7 ppp _ppp
+6 _ _ _ _ 
+5 _ _QP _ 
+4 _ _ p _ 
+3 _ _ _ _ 
+2 PPP _PPP
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+It's white turn
+8 rnbqkbnr
+7 ppp _ pp
+6 _ _ _p_ 
+5 _ _QP _ 
+4 _ _ p _ 
+3 _ _ _ _ 
+2 PPP _PPP
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+3443
+43
+Capture p
+It's black turn
+8 rnbqkbnr
+7 ppp _ pp
+6 _ _ _p_ 
+5 _ _ P _ 
+4 _ _ Q _ 
+3 _ _ _ _ 
+2 PPP _PPP
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+It's white turn
+8 rnbqkbnr
+7 p p _ pp
+6 _ _ _p_ 
+5 _p_ P _ 
+4 _ _ Q _ 
+3 _ _ _ _ 
+2 PPP _PPP
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+4347
+44
+this is x and y: 4, 4
+P
+The king is not in check
+It's black turn
+8 rnbqkbnr
+7 p p _ pp
+6 _ _ _p_ 
+5 _p_ P _ 
+4 _ _ Q _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+It's white turn
+8 rnbqkbnr
+7 p _ _ pp
+6 _ _ _p_ 
+5 _pp P _ 
+4 _ _ Q _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+4347
+44
+this is x and y: 4, 4
+P
+The king is not in check
+4303
+33
+this is x and y: 3, 3
+this is x and y: 2, 3
+this is x and y: 1, 3
+It's black turn
+8 rnbqkbnr
+7 p _ _ pp
+6 _ _ _p_ 
+5 _pp P _ 
+4 Q _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+It's white turn
+8 rnbqkbnr
+7 p _ _ p 
+6 _ _ _p_ 
+5 _pp P _p
+4 Q _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+0347
+14
+this is x and y: 1, 4
+p
+The king is not in check
+0347
+14
+this is x and y: 1, 4
+p
+Path is not clear!
+not valid
+8 rnbqkbnr
+7 p _ _ p 
+6 _ _ _p_ 
+5 _pp P _p
+4 Q _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+0347
+14
+this is x and y: 1, 4
+p
+The king is not in check
+0307
+04
+this is x and y: 0, 4
+this is x and y: 0, 5
+this is x and y: 0, 6
+p
+Path is not clear!
+not valid
+8 rnbqkbnr
+7 p _ _ p 
+6 _ _ _p_ 
+5 _pp P _p
+4 Q _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+0347
+14
+this is x and y: 1, 4
+p
+The king is not in check
+0304
+04
+It's black turn
+8 rnbqkbnr
+7 p _ _ p 
+6 _ _ _p_ 
+5 Qpp P _p
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+Capture P
+It's white turn
+8 rnbqkbnr
+7 p _ _ p 
+6 _ _ _ _ 
+5 Qpp p _p
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+0444
+14
+this is x and y: 1, 4
+p
+Path is not clear!
+not valid
+8 rnbqkbnr
+7 p _ _ p 
+6 _ _ _ _ 
+5 Qpp p _p
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+0415
+15
+It's black turn
+8 rnbqkbnr
+7 p _ _ p 
+6 _Q_ _ _ 
+5 _pp p _p
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+It's white turn
+8 rnbqkbnr
+7 p _ _ _ 
+6 _Q_ _ _ 
+5 _pp p pp
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+1555
+25
+this is x and y: 2, 5
+this is x and y: 3, 5
+this is x and y: 4, 5
+It's black turn
+8 rnbqkbnr
+7 p _ _ _ 
+6 _ _ _Q_ 
+5 _pp p pp
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 0
+The king is not in check
+Capture Q
+It's white turn
+8 rnbqkb_r
+7 p _ _ _ 
+6 _ _ _n_ 
+5 _pp p pp
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+5005
+41
+this is x and y: 4, 1
+this is x and y: 3, 2
+this is x and y: 2, 3
+this is x and y: 1, 4
+p
+Path is not clear!
+not valid
+8 rnbqkb_r
+7 p _ _ _ 
+6 _ _ _n_ 
+5 _pp p pp
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB KBNR
+
+  abcdefgh
+Current turn is: 1
+The king is not in check
+5014
+41
+this is x and y: 4, 1
+this is x and y: 3, 2
+this is x and y: 2, 3
+Capture p
+It's black turn
+8 rnbqkb_r
+7 p _ _ _ 
+6 _ _ _n_ 
+5 _Bp p pp
+4 _ _ _ _P
+3 _ _ _ _ 
+2 PPP _PP 
+1 RNB K NR
+
+  abcdefgh
+Final Score:
+White: 0
+Black: 0
