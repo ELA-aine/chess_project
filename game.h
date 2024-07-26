@@ -49,25 +49,25 @@ class Game{
       //    based on current player
       // if valid, add the move to corresponding history.
     void display();// output the board
-    bool isCheck();
+    bool isCheck() const;
     //check bincheck (may be put in King class)
-    bool isCheckMate();
+    bool isCheckMate() const;
       // lost the game
-    void changePlayer();      
+    void changePlayer() const;      
     // change to !White to keep track of current player
     // Note: I don't know if we really need a function to set isWhite to !isWhite (and vice versa)
     //       this is just a function to keep track what current player is so that we could use
     //       PLAYER's method accordingly.
-    void isWinner(bool white);         
+    void isWinner(bool white) const;         
     // display the winner message, set the winner score + 1;
     // change from string player to bool white
-    void addScore(bool white);
+    void addScore(bool white) const;
     // set player's score + 1;
     // change from string player to bool white
-    void resign(); // self-explanatory 
-    void printFinalScore(); // self-explanatory
+    void resign() const; // self-explanatory 
+    void printFinalScore() const; // self-explanatory
     // delete const
-    void setup(); // Elaine's idea
+    void setup() const; // Elaine's idea
 
     //////////// Additional function for Additional feature, if needed ///////////////
 

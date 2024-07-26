@@ -1,20 +1,21 @@
 #include "board.h"
-#include <memory>
 
+// Board are used to control all the behaviuors of the pieces and change the state accordingly
 
 using namespace std;
 const int ROW = 8;
 const int COL = 8;
 
 
+// Constructor of Board
 Board::Board() {
-  auto board = make_unique<vector<vector<unique_ptr<Piece>>>>();
-  board->resize(8);
-  for (auto& row : *board) {
-      row.resize(8);
-  }
+  board.resize(8);
+    for (auto &row : board) {
+        row.resize(8);
+    }
 }     // constructing a board;
 
+<<<<<<< HEAD
 // Board::Board(const Board& other) {
 //     // Deep copy of the board
 //     board = make_unique<vector<vector<unique_ptr<Piece>>>>();
@@ -35,241 +36,301 @@ Board::Board() {
 // }
 
 
+=======
+// initializing the board
+>>>>>>> 0935def478e84716bf43b2a33c6c4c80221ba767
 void Board::init() {
   setupBoard();
 } 
     
+// setup the default board
 void Board::setupBoard() {
-      setBoard('r', "a8");
-      setBoard('r', "h8");
-      setBoard('n', "b8");
-      setBoard('n', "g8");
-      setBoard('b', "c8");
-      setBoard('b', "f8");
-      setBoard('q', "d8");
-      setBoard('k', "e8");
-      setBoard('p', "a7");
-      setBoard('p', "b7");
-      setBoard('p', "c7");
-      setBoard('p', "d7");
-      setBoard('p', "e7");
-      setBoard('p', "f7");
-      setBoard('p', "g7");
-      setBoard('R', "a1");
-      setBoard('R', "h1");
-      setBoard('N', "b1");
-      setBoard('N', "g1");
-      setBoard('B', "c1");
-      setBoard('B', "f1");
-      setBoard('Q', "d1");
-      setBoard('K', "e1");
-      setBoard('P', "a2");
-      setBoard('P', "h2");
-      setBoard('P', "b2");
-      setBoard('P', "g2");
-      setBoard('P', "c2");
-      setBoard('P', "f2");
-      setBoard('P', "d2");
-      setBoard('P', "e2");
-      
-      // set PAWN
-
+    setBoard('N', "b1");
+    setBoard('n', "b8");
+    setBoard('N', "g1");
+    setBoard('n', "g8");
+    setBoard('B', "c1");
+    setBoard('b', "c8");
+    setBoard('B', "f1");
+    setBoard('b', "f8");
+    setBoard('Q', "d1");
+    setBoard('q', "d8");
+    setBoard('R', "a1");
+    setBoard('r', "a8");
+    setBoard('R', "h1");
+    setBoard('r', "h8");
+    setBoard('K', "e1");
+    setBoard('k', "e8");
+   for (int i = 0; i < 8; ++i) {
+        board[1][i] = make_unique<Pawn>(false, 'p'); // Black pawns
+        board[6][i] = make_unique<Pawn>(true, 'P');  // White pawns
     }
+}
+
 void Board::setBoard(char piece, string coord) {
-      
-      int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
-      int row = 8 - stoi(coord.substr(1));
+    int row = 8 - (coord[1] - '0');
+    int col = coord[0] - 'a';
 
-      switch(piece) {
-        case 'K': 
-          (*board)[row][col] = make_unique<King>(true, 'K'); 
-          break;
-        case 'k': 
-          (*board)[row][col] = make_unique<King>(false, 'k'); 
-          break;
-        case 'Q': 
-          (*board)[row][col] = make_unique<Queen>(true, 'Q'); 
-          break;
-        case 'q': 
-          (*board)[row][col] = make_unique<Queen>(false, 'q'); 
-          break;
-        case 'R': 
-          (*board)[row][col] = make_unique<Rook>(true, 'R'); 
+    // Logic to convert char piece to actual Piece object
+    // Example:
+    switch (piece) {
+        case 'P':
+            board[row][col] = make_unique<Pawn>(true, 'P');
             break;
-        case 'r': 
-          (*board)[row][col] = make_unique<Rook>(false, 'r'); 
-          break;
-        case 'B': 
-          (*board)[row][col] = make_unique<Bishop>(true, 'B'); 
+        case 'p':
+            board[row][col] = make_unique<Pawn>(false, 'p');
             break;
-        case 'b': 
-          (*board)[row][col] = make_unique<Bishop>(false, 'b'); 
-          break;
-        case 'N': 
-          (*board)[row][col] = make_unique<Knight>(true, 'N'); 
-          break;
-        case 'n': 
-          (*board)[row][col] = make_unique<Knight>(false, 'n'); 
-          break;
-        case 'P': 
-          (*board)[row][col] = make_unique<Pawn>(true, 'P'); 
-          break;
-        case 'p': 
-          (*board)[row][col] = make_unique<Pawn>(false, 'p'); 
-          break;
-        default: break;
+        case 'N':
+            board[row][col] = make_unique<Knight>(true, 'N');
+            break;
+        case 'n':
+            board[row][col] = make_unique<Knight>(false, 'n');
+            break;
+        case 'B':
+            board[row][col] = make_unique<Bishop>(true, 'B');
+            break;
+        case 'b':
+            board[row][col] = make_unique<Bishop>(false, 'b');
+            break;
+        case 'Q':
+            board[row][col] = make_unique<Queen>(true, 'Q');
+            break;
+        case 'q':
+            board[row][col] = make_unique<Queen>(false, 'q');
+            break;
+        case 'R':
+            board[row][col] = make_unique<Rook>(true, 'R');
+            break;
+        case 'r':
+            board[row][col] = make_unique<Rook>(false, 'r');
+            break;  
+        case 'K':
+            board[row][col] = make_unique<King>(true, 'K');
+            break;
+        case 'k':
+            board[row][col] = make_unique<King>(false, 'k');
+            break; 
+        // Add other pieces here...
     }
 
-    }
+}
     // set PIECE at COORD, replace if COORD already has a piece
     // restriction: pawn is not at first row or last row
     //              special piece can only appear once in the board
-void Board::removeCoord(string coord) {
-      int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
-      int row = 8 - stoi(coord.substr(1));
-      (*board)[row][col] = nullptr;
-    }
+void Board::removePiece(string coord) {
+  int row = 8 - (coord[1] - '0');
+  int col = coord[0] - 'a';
+  board[row][col] = nullptr;
+}
     // remove PIECE at current COORD:
 Piece* Board::getPiece(const string &coord) const{
+    cout << coord << endl;
+    cout << "111" << endl;
+    cout << coord[0] << endl;
     // Extract the row and column from the coordinate string
-    int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
-    int row = 8 - stoi(coord.substr(1));  // Convert '1'-'8' to 7-0 (assuming bottom-left is (0,0))
+    /* int col = coord.at(0) - 'a';  // Convert 'a'-'h' to 0-7
+    int row = 8 - stoi(coord.substr(1));  */ // Convert '1'-'8' to 7-0 (assuming bottom-left is (0,0))
+    int row = 8 - (coord[1] - '0');
+    int col = coord[0] - 'a';
+    cout << row << " " << col << endl;
 
     // Return the piece at the given position (row, col)
-    return (*board)[row][col].get();
+    Piece * piece2 = board[row][col].get();
+    cout << "1212" << endl;
+    return piece2;
 }
 
-void Board::addMove(string from, string to, string piece, string promotion = "", string capture = "") {
-  moveHistory.emplace_back(make_unique<Move>(from, to, piece, promotion, capture));
+void Board::changeBoard(const string &from, const string &to, char piece) {
+    //out << "Change piece:" << piece << endl;
+    setBoard(piece, to);
+    removePiece(from);
+}
+
+void Board::display() {
+    int count;
+      for (int row = 0; row < 8; ++row) {
+        int curRow = 8 - row;  // Calculate the current row number in descending order
+        cout << curRow << " ";  // Print the current row number
+        count = 0;
+        for (const auto& cell : board[row]) {
+            
+            if (cell) {
+                cout << cell->getSymbol();
+            } else {
+                if (count % 2 == 0) {
+                    cout << "_";
+                } else {
+                    cout << " ";
+                }
+            }
+            count++;
+        }
+        cout << endl;
+    }
+    cout << endl;
+    cout << "  abcdefgh" << endl;
+}
+
+bool Board::checkValidMove(const string &from, const string &to) const {
+   auto movingPiece = getPiece(from);
+
+
+    if (!movingPiece) {
+        // cout << "No piece at the starting position!" << endl;
+        return false;
+    }
+    char pieceSymbol = movingPiece->getSymbol();
+
+    auto destinationPiece = getPiece(to);
+    
+    // Check if the move is valid for the piece
+    if (!movingPiece->isValidMove(from, to)) {
+        // cout << "Invalid move, move again" << endl;
+        return false;
+    }
+    // If it's a piece that moves in a line, check if the path is clear
+
+    
+    if (pieceSymbol == 'B' || pieceSymbol == 'b' || pieceSymbol == 'R' || pieceSymbol == 'r' || pieceSymbol == 'Q' || pieceSymbol == 'q') {
+        if (!isPathClear(from, to)) {
+            // cout << "Path is not clear!" << endl;
+            return false;
+        }
+    }
+
+
+    // Check if destination has a piece and handle capture
+    if (destinationPiece) {
+        if (destinationPiece->isWhite() == movingPiece->isWhite()) {
+            cout << "Cannot capture your own piece!" << endl;
+            return false;
+        } else {
+            cout << "Capture " << destinationPiece->getSymbol() << endl;
+        }
+    }
+
+    // Perform the move
+    //changeBoard(from, to, movingPiece->getSymbol());
+
+    
+    return true;
 }
 
 
-void Board::undoLastMove() {
-  auto size = moveHistory.size();
-  unique_ptr<Move> temp = move(moveHistory.at(size - 1));
 
-  
+bool Board::isPathClear(const std::string &from, const std::string &to) const {     //Bishop
+    int startX = from[0] - 'a'; // Convert 'a'-'h' to 0-7
+    int startY = from[1] - '1'; // Convert '1'-'8' to 0-7
+    int endX = to[0] - 'a'; // Convert 'a'-'h' to 0-7
+    int endY = to[1] - '1'; // Convert '1'-'8' to 0-7
+
+    cout << startX << startY << endX << endY << endl;
+    bool isClear = true;
+
+    int dx, dy;
+
+    if (endX > startX) {
+        dx = 1;
+    } else if (endX < startX) {
+        dx = -1;
+    } else {
+        dx = 0;
+    }
+
+    if (endY > startY) {
+        dy = 1;
+    } else if (endY < startY) {
+        dy = -1;
+    } else {
+        dy = 0;
+    }
+
+    int x = startX + dx;
+    int y = startY + dy;
+    cout << x << y << endl;
+
+
+    while (true) {
+        if (y == endY && x == endX) {
+            break;
+        }
+        // cout << "this is x and y: " << x << ", " << y << endl;
+        // Check if there's a piece on the current square
+        auto piece = getPiece(std::string(1, 'a' + x) + std::to_string(y + 1));
+        if (piece) {
+            cout << piece->getSymbol() << endl;
+           isClear = false;
+           break;
+        }
+
+        if (x == endX && y != endY) {
+            y += dy;
+        } else if (y == endY && x != endX) {
+            x += dx;
+        } else if (y != endY && x != endX){
+            x += dx;
+            y += dy;
+        } 
+        
+    }
+
+    return isClear;
 }
 
+bool Board::canPromote(const std::string &to) {
+    int row = 8 - (to[1] - '0');
+    return row == 7 || row == 0;
+}
 
 bool Board::isInCheck(bool white) const {
-      string kingPosition;
-      // this should be used in makeMove and isInCheck in game.h
-      // check if the given white is in check
-      // so parse through every piece on the board, and first find the numerical position of the king of bool. position should be in string format because the parameter of isValidMove function is string. 
-      for (int x = 0; x < 8; ++x) {
-        for (int y = 0; y < 8; ++y){
-          string currentCoord = string(1, 'a' + x) + to_string(y + 1); // this line produce alphabetical coordinates like 'e2', a5', 'f5'
-          Piece *piece = getPiece(currentCoord);
-          if(piece && piece ->getSymbol() == (white ? 'K' : 'k')) {
-            string kingPosition = currentCoord;
-          }
-        }
-      } // parsing through every possible coordinate
+    string kingPosition;
 
-      // once we have the position of the king, we could use isValidMove to all possible attacking moves, whether these would threaten the king
-      for (int x = 0; x < 8; ++x) {
-        for (int y = 0; y < 8; ++y){
-        string coord = string(1, 'a' + x) + to_string(y + 1);
-         Piece *piece = getPiece(coord);
+    // Find the position of the king
+    for (int x = 0; x < 8; ++x) {
+        for (int y = 0; y < 8; ++y) {
+            string currentCoord = string(1, 'a' + x) + to_string(y + 1);
+            Piece *piece = getPiece(currentCoord);
+            if (piece && piece->getSymbol() == (white ? 'K' : 'k')) {
+                kingPosition = currentCoord;
+                break; // Exit the loop once the king is found
+            }
+        }
+        if (!kingPosition.empty()) break; // Exit the outer loop if the king is found
+    }
+
+    // Check if any opposing piece can attack the king
+    for (int x = 0; x < 8; ++x) {
+        for (int y = 0; y < 8; ++y) {
+            string coord = string(1, 'a' + x) + to_string(y + 1);
+            Piece *piece = getPiece(coord);
             if (piece && piece->isWhite() != white) {
-                if (piece->isValidMove(coord, kingPosition, make_unique<Board>(*this))) {
+                if (piece->isValidMove(coord, kingPosition)) {
+                    // For pieces that move in a line, check if the path is clear
+                    char pieceSymbol = piece->getSymbol();
+                    if (pieceSymbol == 'B' || pieceSymbol == 'b' || pieceSymbol == 'R' || pieceSymbol == 'r' || pieceSymbol == 'Q' || pieceSymbol == 'q') {
+                        if (!isPathClear(coord, kingPosition)) {
+                            continue; // Path is not clear, so this piece can't check the king
+                        }
+                    }
                     return true; // The king is in check
                 }
             }
         }
     }
-} 
-bool Board::isInCheckmate(bool white) const { // meaning no moves for king
-        if (!isInCheck(white)) {
-        // If the King is not in check, it cannot be in checkmate
-        return false;
-    }
 
-      map<string, char> pieces = pieceCoords(white);
-
-    // Iterate over each piece to find if there is any legal move.
-    for (const auto &entry : pieces) {
-        // Get the coordinate of the piece and its type.
-        string coord = entry.first;
-        char pieceType = entry.second;
-
-        // Get all possible moves for the current piece.
-        map<string, int> possibleMovesForPiece = possibleMoves(coord, white);
-
-        // Check if there are any possible moves for this piece.
-        if (!possibleMovesForPiece.empty()) {
-            // If there are possible moves for any piece, it is not a stalemate.
-            return false;
-        }
-    }
+    cout << "The king is not in check" << endl;
+    return false;
 }
 
-bool Board::isStalemate(bool white) const {
-    if (isInCheck(white)) {
-        return false;
-    }
-
-    map<string, char> pieces = pieceCoords(white);
-
-    // Iterate over each piece to find if there is any legal move.
-    for (const auto &entry : pieces) {
-        // Get the coordinate of the piece and its type.
-        string coord = entry.first;
-        char pieceType = entry.second;
-
-        // Get all possible moves for the current piece.
-        map<string, int> possibleMovesForPiece = possibleMoves(coord, white);
-
-        // Check if there are any possible moves for this piece.
-        if (!possibleMovesForPiece.empty()) {
-            // If there are possible moves for any piece, it is not a stalemate.
-            return false;
-        }
-    }
-
-    // If no legal moves are available and the king is not in check, it's a stalemate.
-    return true;
-}
-
-
- // meaning no legals moves but is not in check.
-  //void setup();  // Sets up the board for a new game or custom setup
-
-void Board::display() {
-      for (int row = 0; row < 8; ++row) {
-        int curRow = 8 - row;  // Calculate the current row number in descending order
-        cout << curRow << " ";  // Print the current row number
-        for (const auto& cell : (*board)[row]) {
-            if (cell) {
-                cout << cell->getSymbol();
-            } else {
-                cout << "_";
-            }
-        }
-        cout << endl;
-    }
-
-    cout << "  abcdefgh" << endl;
-}
-
-void Board::changeBoard(const string &from, const string &to, char piece) {
-    cout << piece << endl;
-    setBoard(piece, to);
-    removeCoord(from);
-}
-
-
-// for player implementations:
 map<string, char> Board::pieceCoords(bool isWhite) const {
   // returns the coordinates of pieces left on board
     map<string, char> pieceMap;
     
     // Iterate through each row of the board
-    for (size_t row = 0; row < board->size(); ++row) {
+    for (size_t row = 0; row < board.size(); ++row) {
       // Iterate through each column of the row
-      for (size_t col = 0; col < (*board)[row].size(); ++col) {
-        const auto& piece = (*board)[row][col];
+      for (size_t col = 0; col < (board)[row].size(); ++col) {
+        const auto& piece = (board)[row][col];
         if (piece && piece->isWhite() == isWhite) {
           string coord = to_string(row) + to_string(col);
           pieceMap[coord] = piece->getSymbol();
@@ -280,18 +341,32 @@ map<string, char> Board::pieceCoords(bool isWhite) const {
     return pieceMap;
 }
 
-bool isCastle()
+map<string, int> Board::possibleMoves(string coord, bool isWhite) const {
+  // returns possible moves for piece
+  cout << coord << endl;
 
+<<<<<<< HEAD
 // bool Pawn::isEnPassantMove(const string &from, const string &to, const Board &board) const {
 //     int startX = from[0] - 'a'; // Convert 'a'-'h' to 0-7
 //     int startY = from[1] - '1'; // Convert '1'-'8' to 0-7
 //     int endX = to[0] - 'a'; // Convert 'a'-'h' to 0-7
 //     int endY = to[1] - '1'; // Convert '1'-'8' to 0-7
+=======
+  cout << "8" << endl;
+  // <coord, type (capture)>
+  // maybe
+  // checkmate -> 4
+  // check -> 3
+  // capture -> 2
+  // normal -> 1
+>>>>>>> 0935def478e84716bf43b2a33c6c4c80221ba767
 
-//     if (!enPassantPossible) {
-//         return false;
-//     }
+  map<string, int> possibleMoves;
+  // virtual Piece *getPiece(const string &coord)
+  Piece *piece = getPiece(coord);
+  cout << piece->getSymbol() << endl;
 
+<<<<<<< HEAD
 //     int direction = (this->isWhite()) ? 1 : -1;
 //     if (endY == startY + direction && abs(endX - startX) == 1) {
 //         auto adjacentPawn = board.getPiece(string(1, 'a' + endX) + to_string(startY));
@@ -302,11 +377,39 @@ bool isCastle()
 
 //     return false;
 // }
+=======
+  if (!piece) {
+    return possibleMoves;
+  }
+>>>>>>> 0935def478e84716bf43b2a33c6c4c80221ba767
 
+  char symbol = piece->getSymbol();
+  if (symbol == 'p' || symbol == 'P') {
+    // pawn
+    possibleMoves = getPawnMoves(coord, isWhite);
+  } else if (symbol == 'n' || symbol == 'N') {
+    possibleMoves = getKnightMoves(coord, isWhite);
+  } else if (symbol == 'b' || symbol == 'B') {
+    possibleMoves = getBishopMoves(coord, isWhite);
+  } else if (symbol == 'r' || symbol == 'R') {
+    cout << "9" << endl;
+    possibleMoves = getRookMoves(coord, isWhite);
+  } else if (symbol == 'q' || symbol == 'Q') {
+    possibleMoves = getQueenMoves(coord, isWhite);
+  } else if (symbol == 'k' || symbol == 'K') {
+    possibleMoves = getKingMoves(coord, isWhite);
+  }
 
+  return possibleMoves;
+} 
 
+<<<<<<< HEAD
 int Board::moveValue(const string &fromCoord, const string &toCoord, bool isWhite) const {
   Piece* fromPiece = getPiece(fromCoord);
+=======
+int Board::moveValue(const std::string &fromCoord, const std::string &toCoord, bool isWhite) const {
+  //Piece* fromPiece = getPiece(fromCoord);
+>>>>>>> 0935def478e84716bf43b2a33c6c4c80221ba767
   Piece* toPiece = getPiece(toCoord);
 
   int value = 1;
@@ -330,10 +433,10 @@ map<string, int> Board::getPawnMoves(string coord, bool isWhite) const {
   int direction = isWhite ? -1 : 1;
   int startX = coord[0] - 'a'; // index X
   int startY = coord[1] - '1'; // index Y
-  Piece *piece = getPiece(coord);
+  //Piece *piece = getPiece(coord);
   map<string, int> moves;
 
-  const int numMoves = 4;
+  //const int numMoves = 4;
   // 2 forward
   // 1 forward
   // diagonal right
@@ -348,7 +451,7 @@ map<string, int> Board::getPawnMoves(string coord, bool isWhite) const {
   toCoord = moveX + moveY;
 
   // isValidMove(from, to, board)
-  if (isValidMove(coord, toCoord)) {
+  if (checkValidMove(coord, toCoord)) {
     moves[toCoord] = moveValue(coord, toCoord, isWhite);
   }
 
@@ -357,21 +460,21 @@ map<string, int> Board::getPawnMoves(string coord, bool isWhite) const {
   moveY = to_string(direction + startY);
   toCoord = moveX + moveY;
 
-  if (isValidMove(coord, toCoord)) {
+  if (checkValidMove(coord, toCoord)) {
     moves[toCoord] = moveValue(coord, toCoord, isWhite);
   }
 
   // right diagonal
   moveX = 'a' + 1 + startX;
   moveY = to_string(direction + startY);
-  if (isValidMove(coord, toCoord)) {
+  if (checkValidMove(coord, toCoord)) {
     moves[toCoord] = moveValue(coord, toCoord, isWhite);
   }
 
   // left diagonal
   moveX = 'a' - 1 + startX;
   moveY = to_string(direction + startY);
-  if (isValidMove(coord, toCoord)) {
+  if (checkValidMove(coord, toCoord)) {
     moves[toCoord] = moveValue(coord, toCoord, isWhite);
   }
 
@@ -382,10 +485,10 @@ map<string, int> Board::getPawnMoves(string coord, bool isWhite) const {
 map<string, int> Board::getKnightMoves(string coord, bool isWhite) const {
   int startX = coord[0] - 'a'; // index X
   int startY = coord[1] - '1'; // index Y
-  Piece *piece = getPiece(coord);
+  //Piece *piece = getPiece(coord);
   map<string, int> moves;
 
-  char moveX;
+  //char moveX;
   string moveY;
   string toCoord;
 
@@ -400,7 +503,7 @@ map<string, int> Board::getKnightMoves(string coord, bool isWhite) const {
 
     if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
       string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
-      if (isValidMove(coord, toCoord)) {
+      if (checkValidMove(coord, toCoord)) {
         moves[toCoord] = moveValue(coord, toCoord, isWhite);
       }
     }
@@ -425,9 +528,9 @@ map<string, int> Board::getBishopMoves(string coord, bool isWhite) const {
 
           if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
               string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
-              if (isValidMove(coord, toCoord)) {
+              if (checkValidMove(coord, toCoord)) {
                   moves[toCoord] = moveValue(coord, toCoord, isWhite);
-                  if ((*board)[moveY][moveX]) break;
+                  if (board[moveY][moveX]) break;
               }
           }
       }
@@ -440,23 +543,26 @@ map<string, int> Board::getBishopMoves(string coord, bool isWhite) const {
 
 map<string, int> Board::getRookMoves(string coord, bool isWhite) const {
   map<string, int> moves;
+  cout << "6" << endl;
   int startX = coord[0] - 'a';
   int startY = coord[1] - '1';
+  cout << "7" << endl;
 
   const vector<pair<int, int>> moveOffsets = {
       {0, -1}, {0, 1}, {-1, 0}, {1, 0}
   };
 
   for (const auto& [dx, dy] : moveOffsets) {
+    
       for (int i = 1; i < 8; ++i) {
           int moveX = startX + dx * i;
           int moveY = startY + dy * i;
-
+ 
           if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
               string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
-              if (isValidMove(coord, toCoord)) {
+              if (checkValidMove(coord, toCoord)) {
                   moves[toCoord] = moveValue(coord, toCoord, isWhite);
-                  if ((*board)[moveY][moveX]) break;
+                  if (board[moveY][moveX]) break;
               }
           }
       }
@@ -486,10 +592,10 @@ map<string, int> Board::getQueenMoves(string coord, bool isWhite) const {
 
           if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
               string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
-              if (isValidMove(coord, toCoord)) {
+              if (checkValidMove(coord, toCoord)) {
                   moves[toCoord] = moveValue(coord, toCoord, isWhite);
                   // Stop if there is a piece blocking the way
-                  if ((*board)[moveY][moveX]) break;
+                  if (board[moveY][moveX]) break;
               }
           }
       }
@@ -499,12 +605,11 @@ map<string, int> Board::getQueenMoves(string coord, bool isWhite) const {
 }
 
 map<string, int> Board::getKingMoves(string coord, bool isWhite) const {
-  int direction = isWhite ? -1 : 1;
+  //int direction = isWhite ? -1 : 1;
   int startX = coord[0] - 'a'; // index X
   int startY = coord[1] - '1'; // index Y
-  Piece *piece = getPiece(coord);
+  //Piece *piece = getPiece(coord);
   map<string, int> moves;
-
 
   const vector<pair<int, int>> moveOffsets = {
     {-1, -1}, {0, -1}, {1, -1},
@@ -516,54 +621,17 @@ map<string, int> Board::getKingMoves(string coord, bool isWhite) const {
     int moveX = startX + dx;
     int moveY = startY + dy;
 
-        if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
-            string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
-            if (isValidMove(coord, toCoord)) {
-                moves[toCoord] = moveValue(coord, toCoord, isWhite);
-            }
+    if (moveX >= 0 && moveX < 8 && moveY >= 0 && moveY < 8) {
+        string toCoord = string(1, 'a' + moveX) + to_string(moveY + 1);
+        if (checkValidMove(coord, toCoord)) {
+            moves[toCoord] = moveValue(coord, toCoord, isWhite);
         }
     }
+  }
 
   return moves;
 
 }
-
-map<string, int> Board::possibleMoves(string coord, bool isWhite) const {
-  // returns possible moves for piece
-  // <coord, type (capture)>
-  // maybe
-  // checkmate -> 4
-  // check -> 3
-  // capture -> 2
-  // normal -> 1
-
-  map<string, int> possibleMoves;
-  // virtual Piece *getPiece(const string &coord)
-  Piece *piece = getPiece(coord);
-
-  if (!piece) {
-    return possibleMoves;
-  }
-
-  char symbol = piece->getSymbol();
-  if (symbol == 'p' || symbol == 'P') {
-    // pawn
-    possibleMoves = getPawnMoves(coord, isWhite);
-  } else if (symbol == 'n' || symbol == 'N') {
-    possibleMoves = getKnightMoves(coord, isWhite);
-  } else if (symbol == 'b' || symbol == 'B') {
-    possibleMoves = getBishopMoves(coord, isWhite);
-  } else if (symbol == 'r' || symbol == 'R') {
-    possibleMoves = getRookMoves(coord, isWhite);
-  } else if (symbol == 'q' || symbol == 'Q') {
-    possibleMoves = getQueenMoves(coord, isWhite);
-  } else if (symbol == 'k' || symbol == 'K') {
-    possibleMoves = getKingMoves(coord, isWhite);
-  }
-
-  return possibleMoves;
-} 
-
 
 map<string, map<string, int>> Board::allMoves(bool isWhite) const {
   // finds all possible moves and classifies
@@ -575,6 +643,9 @@ map<string, map<string, int>> Board::allMoves(bool isWhite) const {
   // auto &it = pieces.begin();
   for (const auto &it : pieces) {
     toCoord = it.first;
+    // toCoord 00
+    cout << it.first;
+    cout << it.second << endl;
     pieceMoves = possibleMoves(toCoord, isWhite);
     allMoves[toCoord] = pieceMoves;
   }
@@ -582,6 +653,7 @@ map<string, map<string, int>> Board::allMoves(bool isWhite) const {
   return allMoves;
 } // finds all possible moves and classifies
 
+<<<<<<< HEAD
 
 void Board::changeBoard(const string &from, const string &to, char piece) {
     cout << piece << endl;
@@ -764,3 +836,5 @@ bool Board::canPromote(const string &to) {
     int row = 8 - (to[1] - '0');
     return row == 7 || row == 0;
 }
+=======
+>>>>>>> 0935def478e84716bf43b2a33c6c4c80221ba767
